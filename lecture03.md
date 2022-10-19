@@ -1,6 +1,6 @@
 # lecture03 課題
 
-## サンプルアプリケーション起動
+サンプルアプリケーション起動
 
 <img width="1280" alt="スクリーンショット 2022-10-19 22 40 13" src="https://user-images.githubusercontent.com/102453302/196717253-4eb952f5-e65f-4521-96dd-9870a44e4657.png">
 
