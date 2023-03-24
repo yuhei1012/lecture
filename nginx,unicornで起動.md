@@ -26,7 +26,7 @@ unicorn起動・停止参考サイト
 
 設定後Elastic IPをブラウザで確認したが下記の画像となった
 
-<img width="1206" alt="スクリーンショット 2023-02-09 22 39 55" src="https://user-images.githubusercontent.com/102453302/224464373-975af25f-bc36-4ec2-92d0-24e557042820.png">
+https://github.com/yuhei1012/lecture/blob/lecture05_img/img:nginx%2Cunicorn%E8%B5%B7%E5%8B%95%E3%82%A8%E3%83%A9%E3%83%BC.png
 
 原因はnginxとunicornの起動コマンドを正しい階層で実行していないからだった
 ec2のapp階層ではなく[ec2-user@ip-172-31-39-23 ~]で起動させていた。
