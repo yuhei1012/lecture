@@ -33,7 +33,7 @@ ec2のapp階層ではなく[ec2-user@ip-172-31-39-23 ~]で起動させていた�
 
 そのため下記エラーが発生していた
 
-<img width="1221" alt="スクリーンショット 2023-02-06 12 44 13" src="https://user-images.githubusercontent.com/102453302/224464618-381f2d9f-d0f8-4eb3-89d0-c50f36b444a7.png">
+https://github.com/yuhei1012/lecture/blob/lecture05_img/img:nginx%2Cunicorn%E8%B5%B7%E5%8B%95%E3%82%A8%E3%83%A9%E3%83%BC2.png
 
 原因が分からず設定に関するサイトばかり調べていたが一向に解決できなかった。
 
