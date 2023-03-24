@@ -13,7 +13,7 @@ https://zenn.dev/tikka/articles/6109990725a0f417d058
 
 # ロードバランサーの　DNSNameをブラウザに入力後
 
-<img width="1268" alt="スクリーンショット 2023-02-18 14 11 54" src="https://user-images.githubusercontent.com/102453302/224462993-93a0848d-918c-41b6-ba71-2e2afc5cbf03.png">
+https://github.com/yuhei1012/lecture/blob/lecture05_img/img:%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%BC%E3%80%80%E5%B0%8E%E5%85%A5.png
 
 
 
