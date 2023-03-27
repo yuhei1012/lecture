@@ -21,9 +21,9 @@ https://zenn.dev/tikka/articles/6109990725a0f417d058
 
 ・ターゲットグループのHealth statusでunhealthy
 
-https://github.com/yuhei1012/lecture/blob/lecture05_img/img:%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%BC%E5%B0%8E%E5%85%A5%E6%99%82%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC1.png
+![image](https://github.com/yuhei1012/lecture/blob/lecture05_img/img:%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%BC%E5%B0%8E%E5%85%A5%E6%99%82%3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC1.png)
 
-https://github.com/yuhei1012/lecture/blob/lecture05_img/img:%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%BC%E5%B0%8E%E5%85%A5%E6%99%82%E3%82%A8%E3%83%A9%E3%83%BC2.png
+![image](https://github.com/yuhei1012/lecture/blob/lecture05_img/img:%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%BC%E5%B0%8E%E5%85%A5%E6%99%82%E3%82%A8%E3%83%A9%E3%83%BC2.png)
 
 # エラー解消
 設定後にnginxとunicornを再起動してみたらhealthyとなり解消した
