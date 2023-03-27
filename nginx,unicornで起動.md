@@ -13,7 +13,7 @@
 
 # 起動画面 (nginx,unicorn起動画面と同一)
 
-https://github.com/yuhei1012/lecture/blob/lecture05_img/img:%E7%B5%84%E3%81%BF%E8%BE%BC%E3%81%BF%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E8%B5%B7%E5%8B%95%E7%A2%BA%E8%AA%8D.png
+![image](https://github.com/yuhei1012/lecture/blob/lecture05_img/img:%E7%B5%84%E3%81%BF%E8%BE%BC%E3%81%BF%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E8%B5%B7%E5%8B%95%E7%A2%BA%E8%AA%8D.png)
 
 nginx起動・停止参考サイト
 ## https://gakumon.tech/nginx/nginx_service.html
@@ -26,14 +26,14 @@ unicorn起動・停止参考サイト
 
 設定後Elastic IPをブラウザで確認したが下記の画像となった
 
-https://github.com/yuhei1012/lecture/blob/lecture05_img/img:nginx%2Cunicorn%E8%B5%B7%E5%8B%95%E3%82%A8%E3%83%A9%E3%83%BC.png
+![image](https://github.com/yuhei1012/lecture/blob/lecture05_img/img:nginx%2Cunicorn%E8%B5%B7%E5%8B%95%E3%82%A8%E3%83%A9%E3%83%BC.png)
 
 原因はnginxとunicornの起動コマンドを正しい階層で実行していないからだった
 ec2のapp階層ではなく[ec2-user@ip-172-31-39-23 ~]で起動させていた。
 
 そのため下記エラーが発生していた
 
-https://github.com/yuhei1012/lecture/blob/lecture05_img/img:nginx%2Cunicorn%E8%B5%B7%E5%8B%95%E3%82%A8%E3%83%A9%E3%83%BC2.png
+![image](https://github.com/yuhei1012/lecture/blob/lecture05_img/img:nginx%2Cunicorn%E8%B5%B7%E5%8B%95%E3%82%A8%E3%83%A9%E3%83%BC2.png)
 
 原因が分からず設定に関するサイトばかり調べていたが一向に解決できなかった。
 
