@@ -1,1 +1,1 @@
-![1](img:組み込みサーバー起動確認.png)
+![1](https://github.com/yuhei1012/lecture/blob/lecture05_img/img:S3%E8%BF%BD%E5%8A%A0.png)
