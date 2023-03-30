@@ -11,9 +11,9 @@
 
 
 
-# 起動画面 (nginx,unicorn起動画面と同一)
+# 起動画面 
 
-![image](https://github.com/yuhei1012/lecture/blob/lecture05_img/img:%E7%B5%84%E3%81%BF%E8%BE%BC%E3%81%BF%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E8%B5%B7%E5%8B%95%E7%A2%BA%E8%AA%8D.png)
+![image](画像ファイル/unicorn_nginx起動.png)
 
 nginx起動・停止参考サイト
 ## https://gakumon.tech/nginx/nginx_service.html
