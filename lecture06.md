@@ -10,7 +10,7 @@
 
 ## イベント詳細
 
-![imge](画像ファイル/cloudtrail_ イベント詳細.png)
+![img](画像ファイル/cloudtrail_ イベント詳細.png)
 
 ## イベント名　:StartInstances
 ## イベントID:f64180d2-0bab-4e19-ac39-d1dabc8da862
