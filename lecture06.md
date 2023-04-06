@@ -8,4 +8,18 @@
 
 ![img](画像ファイル/cloudtrail_イベント履歴画面.png)
 
+## イベント詳細
+
+## イベント名　:StartInstances
+## イベント ID:f64180d2-0bab-4e19-ac39-d1dabc8da862
+## リクエスト ID:a1b2caaf-444e-48d6-b1a7-fe5643724ac3
+
+
+
+
+
+### 参照サイト
+https://www.insight-tec.com/tech-blog/aws/20211223_aws_cloudtrail/
+
+
 
