@@ -6,4 +6,6 @@
  
 ## cloudtrailイベント履歴
 
+![img](画像ファイル/cloudtrail_イベント履歴画面.png)
+
 
