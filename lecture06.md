@@ -2,6 +2,8 @@
 
 ## cloudtrail作成
 
+![img](画像ファイル/cloudtrail_作成画面.png)
+
  
 ## cloudtrailイベント履歴
 
