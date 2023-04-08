@@ -11,4 +11,9 @@ https://calculator.aws/#/estimate?id=5b6cca2cd932d7e3269af198188ba247ee7d5adc
 
 # 各サービスの料金
 
+![img](画像ファイル/AWS_コスト1.png)
+
+
+
+
 
