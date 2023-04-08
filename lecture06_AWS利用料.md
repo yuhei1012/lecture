@@ -8,6 +8,7 @@ https://calculator.aws/#/estimate?id=5b6cca2cd932d7e3269af198188ba247ee7d5adc
 
 # AWSサービスの現在の利用料
 
+![img](画像ファイル/AWS_利用料_230408.png)
 
 # 各サービスの料金
 
@@ -16,6 +17,7 @@ https://calculator.aws/#/estimate?id=5b6cca2cd932d7e3269af198188ba247ee7d5adc
 
 ![img](画像ファイル/AWS_コスト2.png)
 
+-EC2は無料枠に収まっていない。アカウントを作成してから既に一年以上が経過しているので課題を速く終わらせたいと思った
 
 
 
