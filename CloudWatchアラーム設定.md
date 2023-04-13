@@ -10,7 +10,7 @@
 ![img](画像ファイル/rails_app使用不可アラーム.png)
 
 
-## OKパターン
+## OKパターン設定
 
 -TargetGroup Healthy
 
