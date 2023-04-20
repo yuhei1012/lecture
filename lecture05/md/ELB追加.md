@@ -13,7 +13,7 @@ https://zenn.dev/tikka/articles/6109990725a0f417d058
 
 # ロードバランサーの　DNSNameをブラウザに入力後
 
-![img](画像ファイル/ロードバランサー導入.png)
+![img](lecture05/ロードバランサー導入.png)
 
 
 
