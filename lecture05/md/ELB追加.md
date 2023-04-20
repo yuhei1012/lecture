@@ -21,7 +21,7 @@ https://zenn.dev/tikka/articles/6109990725a0f417d058
 
 ・ターゲットグループのHealth statusでunhealthy
 
-![image](画像ファイル/img:ロードバランサー導入時のエラー1.png)
+![img](lecture05/img:ロードバランサー導入時のエラー1.png)
 
 ![image](画像ファイル/img:ロードバランサー導入時エラー2.png)
 
