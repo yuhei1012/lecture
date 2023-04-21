@@ -112,6 +112,7 @@ https://qiita.com/rch1223/items/9377446c3d010d91399b
 - コンフリクトが発生してしまった場合
 
 https://qiita.com/nabenomoto/items/ea16c5ba6f5dd24b9b54
-↑のサイトが参考になった。
+
+ ↑のサイトが参考になった。
 
 他にはgithubのメッセージの通りに進めた結果解消される
