@@ -6,62 +6,62 @@
 
 ・ ec2にssh接続後
 - ec2-user@ip-172-31-39-23　$ sudo yum update -y
-・ gitのインストール
+- gitのインストール
 - $ sudo yum install git -y
-・ rbenvをリポジトリからクローン
+- rbenvをリポジトリからクローン
 - $ git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
-・ クローンしてきたらrbenvのPATHを通す
+- クローンしてきたらrbenvのPATHを通す
 - $ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
 - $ echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
 - $ source ~/.bash_profile
-・ rbenvのバージョンが表示されればインストールは成功
+- rbenvのバージョンが表示されればインストールは成功
 - $ rbenv -v
 
-・ ruby-buildのインストール
-・ リポジトリからクローン
+- ruby-buildのインストール
+- リポジトリからクローン
 - $ git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 - インストールの実行
 - $ cd ~/.rbenv/plugins/ruby-build
 - $ sudo ./install.sh
-・ インストール可能なRubyのバージョン一覧が表示されればruby-buildのインストールは成功
+- インストール可能なRubyのバージョン一覧が表示されればruby-buildのインストールは成功
 - $ rbenv install -l
 
-・ Rubyのインストール
-・ Rubyインストールに必要なパッケージをインストール
+- Rubyのインストール
+- Rubyインストールに必要なパッケージをインストール
 - $ sudo yum -y install gcc-c++ glibc-headers openssl-devel readline libyaml-devel readline-devel zlib zlib-devel libffi-devel libxml2 libxslt libxml2-devel libxslt-devel sqlite-devel
-・ benvでバージョンを指定してRubyをインストール（けっこう時間かかる）
+- benvでバージョンを指定してRubyをインストール（けっこう時間かかる）
 - $ rbenv install 3.1.2
-・ 今回の課題ではバージョン3.1.2をインストール
-・ rbenvで使用するRubyのバージョンを指定
+- 今回の課題ではバージョン3.1.2をインストール
+- rbenvで使用するRubyのバージョンを指定
 - $ rbenv global 3.1.2
 
-・ bundlerのインストール
+- bundlerのインストール
 - $ gem install bundle
 $-  bundler -v
 
-・ railsのインストール
+- railsのインストール
 - $ gem install rails
 
-・ nvmのインストール
+- nvmのインストール
 - $ git clone https://github.com/creationix/nvm.git ~/.nvm
 
-・ Node.jsをインストール
+- Node.jsをインストール
 
-・ AWSのリポジトリに追加
+- AWSのリポジトリに追加
 - [ec2-user@ip-xxxxxxx]$ curl -sL https://rpm.nodesource.com/setup_14.x | sudo bash -
-・ インストール
+- インストール
 - [ec2-user@ip-xxxxxxx]$ sudo yum -y install nodejs
-・ コマンド実行後、「完了しました！」と表示されば無事インストールされてる
+- コマンド実行後、「完了しました！」と表示されば無事インストールされてる
 
-・ yarnのインストール
+- yarnのインストール
 - $ npm install yarn -g
-・ version確認
+- version確認
 - $ yarn -v
 
-・ 手動でのコンパイル
+- 手動でのコンパイル
 - $ bundle exec rails assets:precompile RAILS_ENV=development
 
-・ database.ymlの編集
+- database.ymlの編集
 
 - default: &default
 - adapter: mysql2
