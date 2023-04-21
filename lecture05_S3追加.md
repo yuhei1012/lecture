@@ -42,9 +42,9 @@ https://qiita.com/haljion/items/edc1225e40956d90ed49
 
 ### 　$ rails c コマンドでnilが返ってくる
 
-![img](lecture05/img:S3追加時エラー nilが返ってくる.png)
+![img](lecture05/img:S3追加時エラーnilが返ってくる.png)
 
 ### credentialsのエラー
-![image](lecture05/credential エラー.png)
+![image](lecture05/img:S3追加時エラー_credentialファイルエラー.png)
 
 ## rails cでnilが返るのはcredentialsファイルのインデントがどこか崩れていたこと
