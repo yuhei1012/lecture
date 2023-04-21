@@ -7,7 +7,7 @@
 
 -OK→アラーム状態通知画像
 
-![img](lecture06_画像ファイル/rails_app使用不可アラーム.png)
+![img](lecture06/rails_app使用不可アラーム.png)
 
 
 ## OKパターン設定
@@ -16,12 +16,12 @@
 
 -アラーム→OK状態通知画像
 
-![img](lecture06_画像ファイル/OKアクション通知.png)
+![img](lecture06/OKアクション通知.png)
 
-![img](lecture06_画像ファイル/アラームアクション.png)
+![img](lecture06/アラームアクション.png)
 
 
-![img](lecture06_画像ファイル/状態履歴.png)
+![img](lecture06/状態履歴.png)
 
 
 
