@@ -42,7 +42,7 @@ https://qiita.com/haljion/items/edc1225e40956d90ed49
 
 ### 　$ rails c コマンドでnilが返ってくる
 
-![image](lecture05/img:S3追加時エラー nilが返ってくる.png)
+![img](lecture05/img:S3追加時エラー nilが返ってくる.png)
 
 ### credentialsのエラー
 ![image](lecture05/credential エラー.png)
