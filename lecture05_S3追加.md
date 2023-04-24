@@ -17,6 +17,8 @@
 
 ## 　S3への画像追加
 
+![img](lecture05/img:S3追加.png)
+
  https://github.com/yuhei1012/lecture/blob/lecture05_img/img:S3%E8%BF%BD%E5%8A%A0.png
 
  https://github.com/yuhei1012/lecture/blob/lecture05_img/img:S3%E8%BF%BD%E5%8A%A02.png
