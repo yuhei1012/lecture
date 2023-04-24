@@ -44,7 +44,7 @@ https://github.com/yuhei1012/lecture/blob/lecture05_img/img:S3%E8%BF%BD%E5%8A%A0
 
 ### credentialsのエラー
 
-![img(lecture05/img:S3追加時エラー_credentialファイルエラー.png)
+![img](lecture05/img:S3追加時エラー_credentialファイルエラー.png)
 
 
 ## rails cでnilが返るのはcredentialsファイルのインデントがどこか崩れていたこと
