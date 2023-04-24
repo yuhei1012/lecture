@@ -17,14 +17,10 @@
 
 ## 　S3への画像追加
 
+ https://github.com/yuhei1012/lecture/blob/lecture05_img/img:S3%E8%BF%BD%E5%8A%A0.png
 
- ![image](lecture05/img:S3追加.png)
- 
+ https://github.com/yuhei1012/lecture/blob/lecture05_img/img:S3%E8%BF%BD%E5%8A%A02.png
 
-
- ![image](lecture05/img:S3追加2.png)
- 
- 
 
 ## ハマったエラー
 
@@ -42,9 +38,10 @@ https://qiita.com/haljion/items/edc1225e40956d90ed49
 
 ### 　$ rails c コマンドでnilが返ってくる
 
-![img](lecture05/img:S3追加時エラー_nilが返ってくる.png)
+https://github.com/yuhei1012/lecture/blob/lecture05_img/img:S3%E8%BF%BD%E5%8A%A0%E6%99%82%E3%82%A8%E3%83%A9%E3%83%BC%20nil%E3%81%8C%E8%BF%94%E3%81%A3%E3%81%A6%E3%81%8F%E3%82%8B.png
 
 ### credentialsのエラー
-![image](lecture05/img:S3追加時エラー_credentialファイルエラー.png)
+https://github.com/yuhei1012/lecture/blob/lecture05_img/img:S3%E8%BF%BD%E5%8A%A0%E6%99%82%E3%82%A8%E3%83%A9%E3%83%BC%E3%80%80credential%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%A8%E3%83%A9%E3%83%BC.png
 
 ## rails cでnilが返るのはcredentialsファイルのインデントがどこか崩れていたこと
+
