@@ -14,11 +14,11 @@ AI を用いて GitHubなどのリポジトリにあるコードをスキャン�
 料金もそれなりに掛かる
 
 - AWS Firewall Manager  WAF（Web Application Firewall）
-- 
+
 ファイアウォール
 
 - AWS Certificate Manager（ACM） 
-- 
+
 SSL 証明書を発行するマネージドサービス
 
 - Amazon Inspector
@@ -67,6 +67,9 @@ S3バケットに個人情報やクレジットカード番号など機密情報
 - AWS Network Firawall
 
 インターネットゲートウェイと VPC の境界に設置するファイアーウォールを実現するサービス
+
+
+- コストとセキュリティ
 
 セキュリティサービスがこれだけあるので、何でも実装してしまうとコストが膨大に掛かってしまう。
 
