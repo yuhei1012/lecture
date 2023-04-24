@@ -127,4 +127,10 @@ https://qiita.com/nabenomoto/items/ea16c5ba6f5dd24b9b54
 
 -コンフリクト解消まで
 
+![img](lecture05/コンフリクト事例画像2.png)
+
+- $ git add -A で差分を追加
+- $ git commit実行　これにより全ての差分がコミットされる
+-  git push -u origin lecture_02でpushでコンフリクト解消(今回はlecture_02というブランチで発生したためこの部分は発生したブランチ名になる)
+
 
