@@ -118,8 +118,6 @@ https://qiita.com/nabenomoto/items/ea16c5ba6f5dd24b9b54
 他にはgithubのメッセージの通りに進めた結果解消される
 
 
-他にはgithubのメッセージの通りに進めた結果解消される
-
 -コンフリクト事例
 
 - $ git status  (状況確認)
