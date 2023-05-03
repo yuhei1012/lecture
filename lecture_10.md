@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: "2010-09-09"
+```　AWSTemplateFormatVersion: "2010-09-09"
 Description:
   RDS for  MySQL Create
 
@@ -185,3 +185,4 @@ Outputs:
     Value: !Ref DBName
     Export:
       Name: !Sub "${PJPrefix}-${DBInstanceName}-dbname"
+```
