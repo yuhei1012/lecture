@@ -1,7 +1,7 @@
 ## VPC,sub-net_private_public,IGW,NAT ゲートウェイ
 
 
-''' AWSTemplateFormatVersion: 2010-09-09
+```AWSTemplateFormatVersion: 2010-09-09
 
 Resources:
   CfVPC:
@@ -105,4 +105,4 @@ Resources:
     Properties:
       RouteTableId: !Ref CfRouteTableForPrivateSubnet
       SubnetId: !Ref CfPrivateSubnet
-      '''
+      ```
