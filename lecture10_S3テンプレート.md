@@ -1,6 +1,6 @@
 ## S3テンプレート
 
----
+```
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'S3バケットを作成するテンプレート'
 
@@ -26,3 +26,5 @@ Resources:
       Bucket: !Ref MyBucket
       PolicyDocument:
         Fn::Sub: ${BucketPolicy}
+        
+       ```
