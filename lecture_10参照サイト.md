@@ -20,3 +20,7 @@ https://qiita.com/okubot55/items/87d4bd7a3649992bc5f7
 
 -github codeブロック
 https://dev.classmethod.jp/articles/syntax-highlight-language-list/
+
+
+-AWSハンズオン動画
+https://pages.awscloud.com/JAPAN-event-OE-Hands-on-for-Beginners-cfn-2022-confirmation_810.html
