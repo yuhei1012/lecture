@@ -16,10 +16,10 @@ https://qiita.com/okubot55/items/844ae5ac5b188435d58b
 https://qiita.com/okubot55/items/87d4bd7a3649992bc5f7
 
 -Network,Security,ec2,S3,ALB,RDS-今回一番参考になったサイト
-https://qiita.com/Takao_/items/8384110f259b31abdc1b
+-https://qiita.com/Takao_/items/8384110f259b31abdc1b
 
 
-https://zenn.dev/megazone_japan/articles/ad61f0dbc6e37f
+-https://zenn.dev/megazone_japan/articles/ad61f0dbc6e37f
 
 
 
