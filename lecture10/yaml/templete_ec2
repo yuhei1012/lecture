@@ -1,0 +1,80 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: ec2_templete
+
+
+
+
+
+
+Parameters:
+  InstanceType:
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - m1.small
+      - m1.large
+  DBInstanceIdentifier:
+    Type: String
+  DBInstanceType:
+    Type: String
+    Default: db.t2.micro
+    AllowedValues:
+      - db.t2.micro
+      - db.t2.small
+      - db.t2.medium
+  DBSubnetGroupDescription:
+    Type: String
+  S3BucketName:
+    Type: String
+
+
+
+Resources:
+  SampleEC21a:
+    Type: AWS::EC2::Instance
+    Properties:
+      NetworkInterfaces:
+        - SubnetId: !ImportValue PublicSubnet1a
+          GroupSet:
+            - !Ref SecurityGroupEC2
+          DeviceIndex: 0
+      InstanceType: !Ref InstanceType
+      ImageId: ami-0af1df87db7b650f4
+      Tags:
+        - Key: Name
+          Value: SampleEC21a
+      KeyName: abc123456789
+
+
+  SecurityGroupEC2:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SecurityGroupEC2
+      GroupName: SecurityGroupEC2
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0 
+
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: SecurityGroupEC2
+      VpcId: !ImportValue SampleVPC
+
+
+
+Outputs:
+  SecurityGroupEC2:
+    Value: !Ref SecurityGroupEC2
+    Export:
+      Name: SecurityGroupEC2
+  SampleEC21a:
+    Value: !Ref SampleEC21a
+    Export:
+      Name: SampleEC21a
