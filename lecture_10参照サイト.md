@@ -15,11 +15,19 @@ https://qiita.com/okubot55/items/844ae5ac5b188435d58b
 
 https://qiita.com/okubot55/items/87d4bd7a3649992bc5f7
 
+-Network,Security,ec2,S3,ALB,RDS-今回一番参考になったサイト
+https://qiita.com/Takao_/items/8384110f259b31abdc1b
+
+
+https://zenn.dev/megazone_japan/articles/ad61f0dbc6e37f
 
 
 
 
 -その他
+
+-公式ドキュメント
+https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html
 
 -github codeブロック
 https://dev.classmethod.jp/articles/syntax-highlight-language-list/
@@ -29,4 +37,9 @@ https://dev.classmethod.jp/articles/syntax-highlight-language-list/
 https://pages.awscloud.com/JAPAN-event-OE-Hands-on-for-Beginners-cfn-2022-confirmation_810.html
 
 
+-Resources忘れのエラー
+https://dev.classmethod.jp/articles/tsnote-cloudformation-template-do-not-work-in-the-official-document/
+
+-jsonとyamlを変換
+https://www.site24x7.com/ja/tools/json-to-yaml.html
 
