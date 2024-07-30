@@ -54,7 +54,7 @@ $-  bundler -v
 - コマンド実行後、「完了しました！」と表示されば無事インストールされてる
 
 - yarnのインストール
-- $ npm install yarn -g
+- $ sudo npm install yarn -g
 - version確認
 - $ yarn -v
 
