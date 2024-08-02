@@ -1,19 +1,19 @@
-version: 2.1
-orbs:
-  python: circleci/python@2.0.3
+version: 2
+
 jobs:
-  cfn-lint:
-    executor: python/default
+  test:
+    docker:
+      - image: circleci/ruby:2.6.5
+    working_directory: ~/repo
     steps:
       - checkout
-      - run: pip install cfn-lint
       - run:
-          name: run cfn-lint
-          command: |
-            cfn-lint -i W3002 -t cloudformation/*.yml
+          name: Run test
+          command: 'ruby test_sum.rb'
 
 workflows:
-  raisetech:
+  version: 2
+  workflows:
     jobs:
-      - cfn-lint
+      - test
 
