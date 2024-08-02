@@ -1,19 +1,14 @@
-version: 2
+version: 2.1
 
 jobs:
-  test:
+  hello-job:
     docker:
-      - image: circleci/ruby:2.6.5
-    working_directory: ~/repo
+      - image: cimg/node:17.2.0 # the primary container, where your job's commands are run
     steps:
-      - checkout
-      - run:
-          name: Run test
-          command: 'ruby test_sum.rb'
+      - checkout # check out the code in the project directory
+      - run: echo "hello world" # run the `echo` command
 
 workflows:
-  version: 2
-  workflows:
+  my-workflow:
     jobs:
-      - test
-
+      - hello-job
