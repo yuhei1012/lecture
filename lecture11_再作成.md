@@ -49,7 +49,8 @@ Select number: 2
 ![img](lecture11/img：テスト項目記述.png)
 
 spec_helper.rbファイル
-![img](lecture11/img：spec_helper.rb.png)
+![img](lecture11/lecture11_img：spec_helper.rb.png)
+
 
 
 テスト成功
