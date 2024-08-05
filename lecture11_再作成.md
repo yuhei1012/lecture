@@ -75,9 +75,10 @@ railsのバージョンを異なるものにした時のテスト失敗画面
 テスト自体のエラーの原因は最初のserverspec-initコマンド実行時にsshかlocalかを選択する際にsshを選択してしまったことが原因である。
 一つのec2マシンで実行する際はlocalを選択するべきであった。
 久々に課題を再開したので動作がしないosがあったりとしたがまた継続して完走を目指す。
-sshを接続する時は下記のように複数のインスタンスで実行する時である。
+sshを接続する時は下記のように複数のインスタンスで実する時である。
 
-![img](lecture11/img：serverspec：ssh.png)
+![img](lecture11/lecture11_img：serverspec：ssh.png)
+
 
 
 
