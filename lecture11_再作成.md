@@ -55,7 +55,7 @@ spec_helper.rbファイル
 
 テスト成功
 
-![img](lecture11/img：テスト成功.png)
+![img](lecture11/lecture11_img：テスト成功.png)
 
 
 
