@@ -42,7 +42,7 @@ Select number: 2
 
 ポート確認
 
-![img](lecture11/img：ポート確認.png)
+![img](lecture11/lecture11_img：ポート確認.png)
 
 
 項目入力
