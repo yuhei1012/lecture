@@ -46,7 +46,7 @@ Select number: 2
 
 
 項目入力
-![img](lecture11/img：テスト項目記述.png)
+![img](lecture11/lecture11_img：テスト項目記述.png)
 
 spec_helper.rbファイル
 ![img](lecture11/lecture11_img：spec_helper.rb.png)
