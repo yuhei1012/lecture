@@ -71,7 +71,7 @@ railsのバージョンを異なるものにした時のテスト失敗画面
 
 ### rake specコマンドエラー　テスト自体ができないエラー
 
-![img](lecture11/img：実行エラー.png)
+![img](lecture11/lecture11_img：実行エラー.png)
 
 
 テスト自体のエラーの原因は最初のserverspec-initコマンド実行時にsshかlocalかを選択する際にsshを選択してしまったことが原因である。
