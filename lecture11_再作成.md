@@ -63,7 +63,8 @@ spec_helper.rbファイル
 
 railsのバージョンを異なるものにした時のテスト失敗画面
 
-![img](lecture11/img：テスト失敗.png)
+![img](lecture11/lecture11_img：テスト失敗.png)
+
 
 
 
