@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   python: circleci/python@2.0.3
+
 jobs:
   cfn-lint:
     executor: python/default
@@ -10,7 +11,7 @@ jobs:
       - run:
           name: run cfn-lint
           command: |
-            cfn-lint -i W3002 -t lecture10/*.yml
+            cfn-lint -i W3002 -t ./lecture10/*.yml  # フルパスで指定
 
 workflows:
   raisetech:
