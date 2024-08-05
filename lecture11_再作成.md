@@ -96,3 +96,6 @@ sshを接続する時は下記のように複数のインスタンスで実す�
 ### chatgptのやり取り
 
 https://chatgpt.com/g/g-PGPnMa4Ph-ri-ben-yu-rokuin/c/ccfec11d-1d21-4114-af93-38c9bb7be0e9
+
+## その他　githubのプロテクションルールについて
+https://zenn.dev/ukigumo_shiina3/articles/a862dc23b36cf0
