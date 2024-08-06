@@ -5,7 +5,7 @@ orbs:
 jobs:
   cfn-lint:
     executor: python/default
-    working_directory: ~/lecture10
+    working_directory: ~/lecture10/yaml
     steps:
       - checkout
       - run: pip install cfn-lint
