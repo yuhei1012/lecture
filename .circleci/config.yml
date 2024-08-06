@@ -5,14 +5,14 @@ orbs:
 jobs:
   cfn-lint:
     executor: python/default
-    working_directory: ~/project/lecture10  # `lecture10` ディレクトリを指定
+    working_directory: ~/project/lecture10  
     steps:
       - checkout
       - run: pip install cfn-lint
       - run:
           name: run cfn-lint
           command: |
-            cfn-lint -i W3002 -t *.yml  # ファイル指定は lecture10 ディレクトリ内
+            cfn-lint -i W3002 -t *.yml 
 
 workflows:
   raisetech:
