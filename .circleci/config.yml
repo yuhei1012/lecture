@@ -18,4 +18,8 @@ workflows:
   raisetech:
     jobs:
       - cfn-lint
+      filters:
+            branches:
+              only:
+                - circleci-project-setup
 
