@@ -9,8 +9,9 @@ jobs:
       - run: pip install cfn-lint
       - run:
           name: run cfn-lint
-          command: |
-            cfn-lint -i W3002 -t cloudformation/*.yml
+          command: 
+          　　cfn-lint -i W3002 -t /circleci-project-setup/lecture10/*.yml
+          
 
 workflows:
   raisetech:
