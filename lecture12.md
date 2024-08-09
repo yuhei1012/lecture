@@ -1,4 +1,4 @@
-# 第12回　circleci
+# 第12回　CircleCi
 
 - CI/CD ツールとは「Continuous Integration/Continuous Delivery」の略称
 
@@ -6,9 +6,9 @@
 
 - 環境構築のコストも低く、手軽に導入できる
 
-[circleciのtopページ](https://circleci.com/ja/)
+[CircleCiのtopページ](https://circleci.com/ja/)
 
-**Raise Techサンプルconfig.yml**
+**RaiseTechサンプルconfig.yml**
 
 ````
 version: 2.1
@@ -30,12 +30,9 @@ workflows:
     jobs:
       - cfn-lint
 ````
-
-
 **修正yaml構文**
 
 ````
-
 version: 2.1
 orbs:
   python: circleci/python@2.0.3
@@ -55,19 +52,14 @@ workflows:
     jobs:
       - cfn-lint
 ````
-
-
 **circleciワークフロー成功**
 ![img](.circleci/circleci_サンプルcfn-lint_success.png)
-
 
 **circleciワークフロー失敗**
 
 ![img](.circleci/img：CircleCIワークフロー失敗時.png)
 
-
 ![img](.circleci/circleci_ワークフロー失敗_エラー内容.png)
-
 
 **ワークフローが失敗した原因**
 
@@ -81,13 +73,11 @@ workflows:
 
 ![img](.circleci/cfn_lint_ハードコーティングエラー.png)
 
-
   **ハードコーティングとはソースコードに直接書き込むことである。**
 
 - 今回の件だとcfnのテンプレートに直接アベイラビリティーゾーンを書き込んだことでエラーになった。
 - 解消するにはパラメーターの事前設定や関数を組み込むことで解消できた。
 - そもそもハードコーティングの何がダメなのかよく理解してなかったがコードの柔軟性が失われたり、メンテナンスの煩雑化、バグ発生のリスク等があるためとあった。
-
 
 [ハードコーティングについて](https://teams.qiita.com/hard-coding-meaning-avoidance-beginner-guide/#:~:text=%E3%83%8F%E3%83%BC%E3%83%89%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AF%E3%81%AA%E3%81%9C%E3%81%A0%E3%82%81%E3%81%AA%E3%81%AE%E3%81%8B&text=%E3%81%BE%E3%81%9A%E3%80%81%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AE%E6%9F%94%E8%BB%9F%E6%80%A7,%E3%81%8C%E9%AB%98%E3%81%BE%E3%82%8B%E6%81%90%E3%82%8C%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82)
 
