@@ -7,11 +7,11 @@
 - 環境構築のコストも低く、手軽に導入できる
 
 
-#### circleciのtopページ
+- circleciのtopページ
 https://circleci.com/ja/
 
 
-Raise techサンプルconfig.yml
+**Raise Techサンプルconfig.yml**
 
 ````
 version: 2.1
@@ -35,7 +35,7 @@ workflows:
 ````
 
 
-#### 修正yaml構文
+**修正yaml構文**
 
 ````
 
@@ -60,11 +60,11 @@ workflows:
 ````
 
 
-###### circleciワークフロー成功
+**circleciワークフロー成功**
 ![img](.circleci/circleci_サンプルcfn-lint_success.png)
 
 
-###### circleciワークフロー失敗
+**circleciワークフロー失敗**
 
 ![img](.circleci/img：CircleCIワークフロー失敗時.png)
 
@@ -72,12 +72,7 @@ workflows:
 ![img](.circleci/circleci_ワークフロー失敗_エラー内容.png)
 
 
-##### ハードコーティングエラー
-
-![img](.circleci/cfn_lint_ハードコーティングエラー.png)
-
-
-###### ワークフローが失敗した原因
+**ワークフローが失敗した原因**
 
 - 原因はconfig.yml構文のエラーであった。
 
@@ -85,8 +80,12 @@ workflows:
 
 - yamlファイルの場所を明示することが必須であったが、ファイルのあるディレクトリのパスが間違っていたり、ディレクトリの名前が間違っていたことが原因でテンプレートが無いというエラーが発生してしまった。
 
-###### ハードコーティングエラー
-ハードコーティングとはソースコードに直接書き込むことである。
+## ハードコーティングエラー
+
+![img](.circleci/cfn_lint_ハードコーティングエラー.png)
+
+
+  **ハードコーティングとはソースコードに直接書き込むことである。**
 
 - 今回の件だとcfnのテンプレートに直接アベイラビリティーゾーンを書き込んだことでエラーになった。
 - 解消するにはパラメーターの事前設定や関数を組み込むことで解消できた。
