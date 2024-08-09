@@ -6,10 +6,7 @@
 
 - 環境構築のコストも低く、手軽に導入できる
 
-
-- circleciのtopページ
-https://circleci.com/ja/
-
+[circleciのtopページ](https://circleci.com/ja/)
 
 **Raise Techサンプルconfig.yml**
 
