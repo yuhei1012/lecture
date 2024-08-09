@@ -46,7 +46,7 @@ Select number: 2
 
 
 項目入力
-![img](lecture11/lecture11_img：テスト項目記述.png)
+![img](lecture11/lecture11_img：80番ポートへの記述変更.png)
 
 spec_helper.rbファイル
 ![img](lecture11/lecture11_img：spec_helper.rb.png)
@@ -55,7 +55,7 @@ spec_helper.rbファイル
 
 テスト成功
 
-![img](lecture11/lecture11_img：テスト成功.png)
+![img](lecture11/lecture11_img：80番ポートのテスト実行.png)
 
 
 
