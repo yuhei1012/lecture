@@ -101,12 +101,12 @@ yamlファイルの場所を明示することが必須であったが、ファ�
 下記のURLが参考になった。
 
 
-https://teams.qiita.com/hard-coding-meaning-avoidance-beginner-guide/#:~:text=%E3%83%8F%E3%83%BC%E3%83%89%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AF%E3%81%AA%E3%81%9C%E3%81%A0%E3%82%81%E3%81%AA%E3%81%AE%E3%81%8B&text=%E3%81%BE%E3%81%9A%E3%80%81%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AE%E6%9F%94%E8%BB%9F%E6%80%A7,%E3%81%8C%E9%AB%98%E3%81%BE%E3%82%8B%E6%81%90%E3%82%8C%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82
+[ハードコーティングについて](https://teams.qiita.com/hard-coding-meaning-avoidance-beginner-guide/#:~:text=%E3%83%8F%E3%83%BC%E3%83%89%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AF%E3%81%AA%E3%81%9C%E3%81%A0%E3%82%81%E3%81%AA%E3%81%AE%E3%81%8B&text=%E3%81%BE%E3%81%9A%E3%80%81%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AE%E6%9F%94%E8%BB%9F%E6%80%A7,%E3%81%8C%E9%AB%98%E3%81%BE%E3%82%8B%E6%81%90%E3%82%8C%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82)
 
 
 ハードコーティングエラー解消参考URL
 
-https://dev.classmethod.jp/articles/cfn-availavility-zone-notation/
+[ハードコーティングエラー解消参考](https://dev.classmethod.jp/articles/cfn-availavility-zone-notation/)
 
 
 
