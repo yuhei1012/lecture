@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: RDS Template
+
+Resources:
+  testDBInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      AllocatedStorage: 20
+      DBInstanceIdentifier: testdbinstance
+      Engine: mysql
+      MasterUsername: admin
+      MasterUserPassword: password
+      DBInstanceClass: db.t2.micro
+      VPCSecurityGroups:
+        - Ref: testMyDBSecurityGroup
+      AvailabilityZone: !Select         #
+        - 0                             # <= Correct!
+        - Fn::GetAZs: !Ref AWS::Region  #
+      Port: 3306
+      MultiAZ: false
+      DBSubnetGroupName: !Ref MyDBSubnetGroup
+
+  testMyDBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: My DB Security Group
+      VpcId: !ImportValue SampleVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: 0.0.0.0/0
+
+  MyDBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: My DB Subnet Group
+      SubnetIds:
+        - !ImportValue PrivateSubnet1a
+        

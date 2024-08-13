@@ -1,0 +1,77 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: ALB Template
+
+Resources:
+  SampleALB:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      IpAddressType: ipv4
+      Name: SampleALB
+      Scheme: internet-facing
+      SecurityGroups:
+        - !Ref SecurityGroupALB
+      Subnets:
+        - !ImportValue PublicSubnet1a        
+      Tags:
+        - Key: Name
+          Value: SampleALB
+
+
+
+  SecurityGroupALB:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SecurityGroupALB
+      GroupName: SecurityGroupALB
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: SecurityGroupALB
+      VpcId: !ImportValue SampleVPC
+
+  # ALBのターゲットグループの指定
+  ALBTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: ALBTargetGroup
+      Port: 80
+      Protocol: HTTP
+      Targets:
+        - Id: !ImportValue EC2Sample1
+          Port: 80
+      VpcId: !ImportValue SampleVPC
+      HealthCheckProtocol: HTTP
+      HealthCheckPath: "/"
+      HealthCheckPort: "traffic-port"
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 2
+      HealthCheckTimeoutSeconds: 5
+      HealthCheckIntervalSeconds: 10
+      Matcher: 
+        HttpCode: 200
+
+  # ALBのリスナーの指定
+  ALBListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn:
+            !Ref ALBTargetGroup
+      LoadBalancerArn:
+        !Ref SampleALB
+      Port: 80
+      Protocol: HTTP
+
+
+
+
+Outputs:
+   SecurityGroupALB:
+    Value: !Ref SecurityGroupALB
+    Export:
+      Name: SecurityGroupALB
