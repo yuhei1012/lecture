@@ -1,10 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: ec2_templete
-
-
-
-
-
+Description: EC2 Template
 
 Parameters:
   InstanceType:
@@ -14,21 +9,6 @@ Parameters:
       - t2.micro
       - m1.small
       - m1.large
-  DBInstanceIdentifier:
-    Type: String
-  DBInstanceType:
-    Type: String
-    Default: db.t2.micro
-    AllowedValues:
-      - db.t2.micro
-      - db.t2.small
-      - db.t2.medium
-  DBSubnetGroupDescription:
-    Type: String
-  S3BucketName:
-    Type: String
-
-
 
 Resources:
   EC2Sample1:
@@ -46,7 +26,6 @@ Resources:
           Value: EC2Sample1
       KeyName: abc123456789
 
-
   SecurityGroupEC2:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -56,8 +35,7 @@ Resources:
         - IpProtocol: tcp
           FromPort: 80
           ToPort: 80
-          CidrIp: 0.0.0.0/0 
-
+          CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
@@ -66,8 +44,6 @@ Resources:
         - Key: Name
           Value: SecurityGroupEC2
       VpcId: !ImportValue SampleVPC
-
-
 
 Outputs:
   SecurityGroupEC2:
