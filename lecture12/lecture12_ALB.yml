@@ -11,7 +11,8 @@ Resources:
       SecurityGroups:
         - !Ref SecurityGroupALB
       Subnets:
-        - !ImportValue PublicSubnet1a        
+        - !ImportValue PublicSubnet1a  
+        - !ImportValue PublicSubnet1c      
       Tags:
         - Key: Name
           Value: SampleALB
@@ -41,7 +42,7 @@ Resources:
       Port: 80
       Protocol: HTTP
       Targets:
-        - Id: !ImportValue EC2Sample1
+        - Id: !ImportValue  EC2Sample1
           Port: 80
       VpcId: !ImportValue SampleVPC
       HealthCheckProtocol: HTTP
