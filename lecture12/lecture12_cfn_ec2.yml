@@ -31,7 +31,7 @@ Parameters:
 
 
 Resources:
-  SampleEC21a:
+  EC2Sample1:
     Type: AWS::EC2::Instance
     Properties:
       NetworkInterfaces:
@@ -43,7 +43,7 @@ Resources:
       ImageId: ami-03d25459ad01ac2b9
       Tags:
         - Key: Name
-          Value: 
+          Value: EC2Sample1
       KeyName: abc123456789
 
 
