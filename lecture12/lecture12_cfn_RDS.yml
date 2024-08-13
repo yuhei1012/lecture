@@ -1,22 +1,32 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: RDS Template
 
+Parameters:
+  DBMasterUserPassword:
+    Description: The master password for the database
+    Type: String
+    NoEcho: true
+  DBInstanceIdentifier:
+    Description: Identifier for the RDS instance
+    Type: String
+    Default: testdbinstance
+
 Resources:
   testDBInstance:
     Type: AWS::RDS::DBInstance
     Properties:
       AllocatedStorage: 20
-      DBInstanceIdentifier: testdbinstance
+      DBInstanceIdentifier: !Ref DBInstanceIdentifier
       Engine: mysql
       EngineVersion: 8.0.34
       MasterUsername: admin
-      MasterUserPassword: password
+      MasterUserPassword: !Ref DBMasterUserPassword
       DBInstanceClass: db.t4g.micro
       VPCSecurityGroups:
         - Ref: testMyDBSecurityGroup
-      AvailabilityZone: !Select         #
-        - 0                             # <= Correct!
-        - Fn::GetAZs: !Ref AWS::Region  #
+      AvailabilityZone: !Select
+        - 0
+        - Fn::GetAZs: !Ref AWS::Region
       Port: 3306
       MultiAZ: false
       DBSubnetGroupName: !Ref MyDBSubnetGroup
@@ -38,4 +48,4 @@ Resources:
       DBSubnetGroupDescription: My DB Subnet Group
       SubnetIds:
         - !ImportValue PrivateSubnet1a
-        - !ImportValue PrivateSubnet1c 
+        - !ImportValue PrivateSubnet1a
