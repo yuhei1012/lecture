@@ -139,20 +139,20 @@ Outputs:
   SampleVPC:
     Value: !Ref SampleVPC
     Export:
-      Name: NetworkLayer-SampleVPC
+      Name: SampleVPC
   PublicSubnet1a:
     Value: !Ref PublicSubnet1a
     Export:
-      Name: NetworkLayer-PublicSubnet1a
+      Name: PublicSubnet1a
   PublicSubnet1c:
     Value: !Ref PublicSubnet1c
     Export:
-      Name: NetworkLayer-PublicSubnet1c
+      Name: PublicSubnet1c
   PrivateSubnet1a:
     Value: !Ref PrivateSubnet1a
     Export:
-      Name: NetworkLayer-PrivateSubnet1a
+      Name: PrivateSubnet1a
   PrivateSubnet1c:
     Value: !Ref PrivateSubnet1c
     Export:
-      Name: NetworkLayer-PrivateSubnet1c
+      Name: PrivateSubnet1c
