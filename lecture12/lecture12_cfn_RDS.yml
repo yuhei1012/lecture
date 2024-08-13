@@ -2,10 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: RDS Template
 
 Parameters:
-  DBMasterUserPassword:
-    Description: The master password for the database
-    Type: String
-    NoEcho: true
   DBInstanceIdentifier:
     Description: Identifier for the RDS instance
     Type: String
@@ -20,7 +16,7 @@ Resources:
       Engine: mysql
       EngineVersion: 8.0.34
       MasterUsername: admin
-      MasterUserPassword: !Ref '{{resolve:secretsmanager:db/password:SecretString:RDSPASSWORD}}'
+      MasterUserPassword: '{{resolve:secretsmanager:db/password:SecretString:RDSPASSWORD}}'
       DBInstanceClass: db.t4g.micro
       VPCSecurityGroups:
         - Ref: testMyDBSecurityGroup
@@ -49,3 +45,4 @@ Resources:
       SubnetIds:
         - !ImportValue PrivateSubnet1a
         - !ImportValue PrivateSubnet1a
+
