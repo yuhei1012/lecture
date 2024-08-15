@@ -19,7 +19,9 @@ Resources:
     Properties:
       VpcId: !Ref SampleVPC
       CidrBlock: 10.0.0.0/24
-      AvailabilityZone: ap-northeast-1a
+      AvailabilityZone: !Select         #
+        - 0                             # <= Correct!
+        - Fn::GetAZs: !Ref AWS::Region  #
       Tags:
       - Key: Name
         Value: PublicSubnet1a
@@ -28,11 +30,36 @@ Resources:
     Properties:
       VpcId: !Ref SampleVPC
       CidrBlock: 10.0.1.0/24
-      AvailabilityZone: ap-northeast-1a
+      AvailabilityZone: !Select         #
+        - 0                       # <= Correct!
+        - Fn::GetAZs: !Ref AWS::Region  #
       Tags:
       - Key: Name
         Value: PrivateSubnet1a
-  
+
+  PublicSubnet1c:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref SampleVPC
+      CidrBlock: 10.0.3.0/24
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: !Select         #
+        - 1                            # <= Correct!
+        - Fn::GetAZs: !Ref AWS::Region  #
+      Tags:
+      - Key: Name
+        Value: PublicSubnet1c
+  PrivateSubnet1c:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref SampleVPC
+      CidrBlock: 10.0.2.0/24
+      AvailabilityZone:  !Select         #
+        - 1                            # <= Correct!
+        - Fn::GetAZs: !Ref AWS::Region  #
+      Tags:
+      - Key: Name
+        Value: PrivateSubnet1c
 
 
   InternetGateway:
@@ -72,13 +99,22 @@ Resources:
     Properties:
       RouteTableId: !Ref PublicRouteTable
       SubnetId: !Ref PublicSubnet1a
+  PublicRouteTableAssociation1c:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet1c
 
   PrivateRouteTableAssociation1a:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId: !Ref PrivateRouteTable
       SubnetId: !Ref PrivateSubnet1a
-
+  PrivateRouteTableAssociation1c:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      SubnetId: !Ref PrivateSubnet1c
 
   # Routeの指定
   PublicRoute:
@@ -98,6 +134,7 @@ Resources:
       VpcEndpointType: Gateway
       VpcId: !Ref SampleVPC
 
+
 Outputs:
   SampleVPC:
     Value: !Ref SampleVPC
@@ -107,8 +144,15 @@ Outputs:
     Value: !Ref PublicSubnet1a
     Export:
       Name: PublicSubnet1a
-
+  PublicSubnet1c:
+    Value: !Ref PublicSubnet1c
+    Export:
+      Name: PublicSubnet1c
   PrivateSubnet1a:
     Value: !Ref PrivateSubnet1a
     Export:
       Name: PrivateSubnet1a
+  PrivateSubnet1c:
+    Value: !Ref PrivateSubnet1c
+    Export:
+      Name: PrivateSubnet1c

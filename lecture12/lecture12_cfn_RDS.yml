@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: RDS Template
+
+Parameters:
+  DBInstanceIdentifier:
+    Description: Identifier for the RDS instance
+    Type: String
+    Default: testdbinstance
+
+Resources:
+  testDBInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      AllocatedStorage: 20
+      DBInstanceIdentifier: !Ref DBInstanceIdentifier
+      Engine: mysql
+      EngineVersion: 8.0.34
+      MasterUsername: admin
+      MasterUserPassword: '{{resolve:secretsmanager:db/password:SecretString:RDSPASSWORD}}'
+      DBInstanceClass: db.t4g.micro
+      VPCSecurityGroups:
+        - Ref: testMyDBSecurityGroup
+      AvailabilityZone: !Select
+        - 0
+        - Fn::GetAZs: !Ref AWS::Region
+      Port: 3306
+      MultiAZ: false
+      DBSubnetGroupName: !Ref MyDBSubnetGroup
+
+  testMyDBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: My DB Security Group
+      VpcId: !ImportValue SampleVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: 0.0.0.0/0
+
+  MyDBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: My DB Subnet Group
+      SubnetIds:
+        - !ImportValue PrivateSubnet1a
+        - !ImportValue PrivateSubnet1a
+
