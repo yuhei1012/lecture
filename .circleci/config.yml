@@ -69,9 +69,16 @@ jobs:
           name: Set up SSH Key
           command: |
             echo "$ANSIBLE_PRIVATE_KEY" > ~/.ssh/id_rsa
-            chmod 700 ~/.ssh/id_rsa
-      
-      # Ansibleのインストール（apt-get）
+            chmod 600 ~/.ssh/id_rsa
+
+      - run:
+          name: Verify SSH Key Exists
+          command: ls -l ~/.ssh/id_rsa
+
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"  # 正しいフィンガープリントを設定
+
       - run:
           name: Install Ansible
           command: |
@@ -82,7 +89,7 @@ jobs:
       - run:
           name: Run Ansible Playbook
           command: |
-            ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user --private-key ~/.ssh/id_rsa
+            ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user --private-key ~/.ssh/id_rsa --ssh-common-args='-o StrictHostKeyChecking=no'
 
 workflows:
   version: 2
@@ -95,5 +102,6 @@ workflows:
       - execute-ansible:
           requires:
             - cfn-execute
+
 
 
