@@ -1,0 +1,4 @@
+---
+# vars file for nginx
+nginx_yum_repo_baseurl: http://nginx.org/packages/amzn2/$releasever/$basearch/
+nginx_yum_gpgkey: https://nginx.org/keys/nginx_signing.key
