@@ -42,7 +42,6 @@
 
   roles:
     - ruby
-    - rails
     - mysql
     - rails_app
     - nginx
