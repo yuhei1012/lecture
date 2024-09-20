@@ -79,7 +79,7 @@ jobs:
       - run:
           name: Run Ansible Playbook
           command: |
-            ansible-playbook -i lecture13/Ansible/inventory lecture13/Ansible/playbook.yml -u ec2-user --private-key ~/.ssh/id_rsa
+            ansible-playbook -i lecture/Ansible/inventory lecture/Ansible/playbook.yml -u ec2-user --private-key ~/.ssh/id_rsa
 
 workflows:
   version: 2
