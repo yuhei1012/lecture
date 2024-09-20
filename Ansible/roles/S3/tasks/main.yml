@@ -1,0 +1,49 @@
+---
+# タスクのみを記述
+- name: Ensure storage.yml exists for S3 configuration in development
+  ansible.builtin.template:
+    src: storage.yml.j2
+    dest: /var/sample-app/raisetech-live8-sample-app/config/storage.yml
+  vars:
+    aws_region: "{{ aws_region }}"
+    s3_bucket_name: "{{ s3_bucket_name }}"
+  tags: S3
+
+- name: Set Active Storage service to S3 in development environment
+  lineinfile:
+    path: /var/sample-app/raisetech-live8-sample-app/config/environments/development.rb
+    regexp: '^ *config.active_storage.service'
+    line: "config.active_storage.service = :amazon"
+    backrefs: yes
+  tags: S3
+
+     #S3の画像表示に必要な構文
+- name: Add mini_magick variant processor to application.rb
+  lineinfile:
+    path: /var/sample-app/raisetech-live8-sample-app/config/application.rb
+    regexp: '^ *config.active_storage.variant_processor'
+    line: "config.active_storage.variant_processor = :mini_magick"
+    backrefs: yes
+  tags: S3
+
+
+
+
+- name: Ensure correct ownership and permissions for storage directory
+  ansible.builtin.file:
+    path: /var/sample-app/raisetech-live8-sample-app/storage
+    state: directory
+    owner: ec2-user
+    group: ec2-user
+    mode: '0775'
+    recurse: yes
+  tags: S3
+
+- name: Precompile assets for development environment
+  ansible.builtin.shell: |
+    source /etc/profile.d/rbenv.sh
+    bundle exec rails assets:precompile
+  args:
+    chdir: /var/sample-app/raisetech-live8-sample-app
+    executable: /bin/bash
+  tags: S3
