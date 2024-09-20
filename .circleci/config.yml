@@ -80,7 +80,9 @@ jobs:
 
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"  # 正しいフィンガープリントを設定
+            - "SHA256:TDo74HlmOz/+87j7D2+JxbVBh0Ziy+3vJNWpREsKM6E
+
+"  # 正しいフィンガープリントを設定
 
 
 
