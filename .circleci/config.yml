@@ -75,15 +75,15 @@ jobs:
           name: Verify SSH Key Exists
           command: ls -l ~/.ssh/id_rsa
 
-      - add_ssh_keys:
+     
+
+      - checkout
+      - ansible-playbook/install:
+          version: 2.9.27
+
+   　　- add_ssh_keys:
           fingerprints:
             - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"  # 正しいフィンガープリントを設定
-
-      - run:
-          name: Install Ansible
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y ansible
 
       # Ansible Playbookの実行
       - run:
