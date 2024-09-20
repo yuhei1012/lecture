@@ -1,0 +1,12 @@
+Host xxxxx  #target nodeの名前
+        HostName xx.xx.xx.xx #targetnodeのipアドレス
+        IdentityFile /home/ec2-user/.ssh/t123456.pem
+        User ec2-user
+        ServerAliveInterval 30
+
+
+
+
+
+
+#IdentityFile /home/ec2-user/.ssh/t123456.pemの/.ssh/の前に~はいらない
