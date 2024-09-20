@@ -80,7 +80,7 @@ jobs:
       - run:
           name: Run Ansible Playbook
           command: |
-            ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user --private-key ~/.ssh/t123456.pem --ssh-common-args='-o StrictHostKeyChecking=no'
+            ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user --private-key /.ssh/t123456.pem --ssh-common-args='-o StrictHostKeyChecking=no'
 
 workflows:
   version: 2
