@@ -63,7 +63,9 @@ jobs:
     executor: python/default
     steps:
       - checkout
-      
+       - ansible-playbook/install:
+          version: 2.9.27
+          
       # 環境変数から秘密鍵を保存
       - run:
           name: Set up SSH Key
@@ -75,15 +77,11 @@ jobs:
           name: Verify SSH Key Exists
           command: ls -l ~/.ssh/id_rsa
 
-     
-
-      - checkout
-      - ansible-playbook/install:
-          version: 2.9.27
-
-   　　- add_ssh_keys:
+      - add_ssh_keys:
           fingerprints:
             - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"  # 正しいフィンガープリントを設定
+
+
 
       # Ansible Playbookの実行
       - run:
@@ -102,6 +100,3 @@ workflows:
       - execute-ansible:
           requires:
             - cfn-execute
-
-
-
