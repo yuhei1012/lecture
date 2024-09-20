@@ -1,0 +1,93 @@
+---
+- name: Check if Ruby is installed
+  ansible.builtin.stat:
+    path: /usr/local/rbenv/versions/3.2.3
+  register: ruby_check_install
+  tags: rails_app
+
+- name: Install Ruby 3.2.3 if not installed
+  shell: |
+    export PATH="/usr/local/rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
+    rbenv install -s 3.2.3
+  args:
+    executable: /bin/bash
+  when: ruby_check_install.stat.exists == false
+  tags: rails_app
+
+
+- name: Set global ruby version
+  shell: bash -lc "rbenv global 3.2.3 && rbenv rehash"
+  tags: rails_app
+
+
+
+- name: Install Bundler gem
+  gem:
+    name: bundler
+    executable: /usr/local/rbenv/shims/gem
+  become: no
+  tags: rails_app
+
+- name: Ensure correct permissions for project directory
+  ansible.builtin.file:
+    path: /var/sample-app/raisetech-live8-sample-app
+    state: directory
+    mode: '0775'
+    owner: ec2-user  # 適切なユーザーに変更
+    group: ec2-user  # 適切なグループに変更
+  become: yes
+  tags: rails_app
+
+- name: Ensure correct permissions for vendor/bundle
+  ansible.builtin.file:
+    path: /var/sample-app/raisetech-live8-sample-app/vendor/bundle
+    state: directory
+    recurse: yes
+    mode: '0775'
+    owner: ec2-user  # 適切なユーザーに変更
+    group: ec2-user  # 適切なグループに変更
+  become: yes
+  tags: rails_app
+
+- name: Configure Bundler to use vendor/bundle
+  become: yes
+  become_user: ec2-user
+  shell: |
+    export PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
+    bundle config set --local path 'vendor/bundle'
+  args:
+    chdir: /var/sample-app/raisetech-live8-sample-app
+    executable: /bin/bash
+  tags: rails_app
+
+- name: Install Rails dependencies
+  become: yes
+  become_user: ec2-user
+  shell: |
+    export PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
+    bundle install --jobs 1
+  args:
+    chdir: /var/sample-app/raisetech-live8-sample-app
+    executable: /bin/bash
+  tags: rails_app
+
+- name: Install Rails gem
+  gem:
+    name: rails
+    state: present
+    version: 7.1.3.2
+    executable: /usr/local/rbenv/shims/gem
+  become: no
+  tags: rails_app
+
+- name: Rehash rbenv
+  shell: |
+    export PATH="/usr/local/rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
+    rbenv rehash
+  args:
+    executable: /bin/bash
+  tags: rails_app
