@@ -66,40 +66,24 @@ jobs:
       - checkout
       - ansible-playbook/install:
           version: 2.9.27
-          
-      # 環境変数から秘密鍵を保存
       - run:
           name: Set up SSH Key
           command: |
-            echo "$ANSIBLE_PRIVATE_KEY" > ~/.ssh/id_rsa
-            chmod 600 ~/.ssh/id_rsa
-
+            echo "$ANSIBLE_PRIVATE_KEY" > ~/.ssh/t123456.pem
+            chmod 600 ~/.ssh/t123456.pem
       - run:
           name: Verify SSH Key Exists
-          command: ls -l ~/.ssh/id_rsa
-
+          command: ls -l ~/.ssh/t123456.pem
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:TDo74HlmOz/+87j7D2+JxbVBh0Ziy+3vJNWpREsKM6E
-
-"  # 正しいフィンガープリントを設定
-
-
-
-      # Ansible Playbookの実行
+            - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
       - run:
           name: Run Ansible Playbook
           command: |
-            ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user --private-key ~/.ssh/id_rsa --ssh-common-args='-o StrictHostKeyChecking=no'
+            ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user --private-key ~/.ssh/t123456.pem --ssh-common-args='-o StrictHostKeyChecking=no'
 
 workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - cfn-lint
-      - cfn-execute:
-          requires:
-            - cfn-lint
-      - execute-ansible:
-          requires:
-            - cfn-execute
+      - execute-ansible
