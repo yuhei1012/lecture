@@ -26,7 +26,7 @@ jobs:
           name: Deploy Network Stack
           command: |
             aws cloudformation deploy \
-              --template-file lecture13/lecture12_cfn_network.yml \
+              --template-file lecture13/lecture13_cfn_network.yml \
               --stack-name MyNetworkStack
 
       - run:
@@ -41,14 +41,14 @@ jobs:
           name: Deploy ALB Stack
           command: |
             aws cloudformation deploy \
-              --template-file lecture13/lecture12_ALB.yml \
+              --template-file lecture13/lecture13_ALB.yml \
               --stack-name MyALBStack
 
       - run:
           name: Deploy RDS Stack
           command: |
             aws cloudformation deploy \
-              --template-file lecture13/lecture12_cfn_RDS.yml \
+              --template-file lecture13/lecture13_cfn_RDS.yml \
               --stack-name MyRDSStack
 
       - run:
