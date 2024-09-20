@@ -63,7 +63,7 @@ jobs:
     executor: python/default
     steps:
       - checkout
-       - ansible-playbook/install:
+      - ansible-playbook/install:
           version: 2.9.27
           
       # 環境変数から秘密鍵を保存
