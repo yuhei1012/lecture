@@ -6,6 +6,7 @@
     app_name: raisetech-live8-sample-app
     app_path: /var/sample-app/raisetech-live8-sample-app
     ruby_version: 3.2.3
+    bundler_version: 2.5.19
     domain:  52.196.170.136   # サーバーのIPアドレスまたはドメイン名を指定
     puma_max_threads: 5
     puma_min_threads: 5
