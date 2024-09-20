@@ -63,11 +63,14 @@ jobs:
     executor: python/default
     steps:
       - checkout
-      # SSHキーの追加（フィンガープリントの設定）
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
-
+      
+      # 環境変数から秘密鍵を保存
+      - run:
+          name: Set up SSH Key
+          command: |
+            echo "$ANSIBLE_PRIVATE_KEY" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+      
       # Ansibleのインストール（apt-get）
       - run:
           name: Install Ansible
@@ -75,7 +78,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y ansible
 
-      # Ansible Playbookの実行（パスをlecture13/Ansibleに修正）
+      # Ansible Playbookの実行
       - run:
           name: Run Ansible Playbook
           command: |
@@ -92,4 +95,5 @@ workflows:
       - execute-ansible:
           requires:
             - cfn-execute
+
 
