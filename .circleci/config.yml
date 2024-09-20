@@ -86,4 +86,10 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - execute-ansible
+      - cfn-lint
+      - cfn-execute:
+          requires:
+            - cfn-lint
+      - execute-ansible:
+          requires:
+            - cfn-execute
