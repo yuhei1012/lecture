@@ -70,8 +70,7 @@
   ansible.builtin.git:
     repo: https://github.com/yuta-ushijima/raisetech-live8-sample-app.git
     dest: /var/sample-app/raisetech-live8-sample-app
-    version: master
-
+    version: main
 
 
 - name: Check if Ruby is installed
