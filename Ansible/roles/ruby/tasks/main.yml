@@ -32,7 +32,7 @@
 - name: Edit bashrc
   ansible.builtin.template:
     src: roles/ruby/templates/rbenv_system.sh.j2
-    dest: /etc/profile.d/rbenv_system.sh
+    dest: /etc/profile.d/rbenv.sh
     owner: root
     group: root
     mode: 0755
