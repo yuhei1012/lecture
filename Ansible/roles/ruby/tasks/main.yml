@@ -68,9 +68,13 @@
 
 - name: Clone Rails Application Repository
   ansible.builtin.git:
-    repo: https://github.com/yuta-ushijima/raisetech-live8-sample-app.git
+    repo: 'https://github.com/yuta-ushijima/raisetech-live8-sample-app.git'
     dest: /var/sample-app/raisetech-live8-sample-app
-    version: main
+    version: master
+    force: no
+    update: yes
+  when: not ansible_local.git.modified  # リポジトリが変更されている場合スキップ
+
 
 
 - name: Check if Ruby is installed
