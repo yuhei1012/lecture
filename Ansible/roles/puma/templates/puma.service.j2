@@ -10,5 +10,22 @@
 #PIDFile=/var/sample-app/raisetech-live8-sample-app/tmp/pids/puma.pid
 #ExecReload=/bin/kill -USR2 $MAINPID
 
+
+[Service]
+Type=simple
+User=ec2-user
+WorkingDirectory=/var/sample-app/raisetech-live8-sample-app
+ExecStart=/bin/bash -lc 'puma -C /var/sample-app/raisetech-live8-sample-app/config/puma.rb'
+Restart=always
+RestartSec=10
+KillMode=process
+TimeoutSec=60
+Environment=RAILS_ENV=development
+Environment=RAILS_SERVE_STATIC_FILES=1
+Environment="LANG=ja_JP.UTF-8"
+Environment="RAILS_MAX_THREADS=20"
+PIDFile=/var/sample-app/raisetech-live8-sample-app/tmp/pids/puma.pid
+ExecReload=/bin/kill -USR2 $MAINPID
+
 [Install]
 WantedBy=multi-user.target
