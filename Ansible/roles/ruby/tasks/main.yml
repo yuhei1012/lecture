@@ -66,6 +66,13 @@
     curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
     sudo yum install yarn -y
 
+- name: Check if there are local modifications in the repository
+  command: git status --porcelain
+  args:
+    chdir: /var/sample-app/raisetech-live8-sample-app
+  register: git_status
+  ignore_errors: true
+
 - name: Clone Rails Application Repository
   ansible.builtin.git:
     repo: 'https://github.com/yuta-ushijima/raisetech-live8-sample-app.git'
@@ -73,7 +80,9 @@
     version: master
     force: no
     update: yes
-  when: not ansible_local.git.modified  # リポジトリが変更されている場合スキップ
+  when: git_status.stdout == ''
+  ignore_errors: true
+
 
 
 
