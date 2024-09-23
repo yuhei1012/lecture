@@ -10,16 +10,6 @@
   tags: S3
 
 
-
-
-- name: Ensure development.rb exists for development environment
-  ansible.builtin.template:
-    src: development.rb.j2
-    dest: /var/sample-app/raisetech-live8-sample-app/config/environments/development.rb
-  tags: S3
-
-
-
   
 
 - name: Set Active Storage service to S3 in development environment
