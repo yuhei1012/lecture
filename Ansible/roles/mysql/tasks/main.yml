@@ -1,15 +1,11 @@
-  vars:
-    db_username: "admin"  # RDSのusername
-    db_password: "dncewu38oQde4"  # RDSのパスワード
-    db_host: "testdbinstance.cab8a84fusu9.ap-northeast-1.rds.amazonaws.com"  # RDSのエンドポイント
-
-
-
-
-
-
 ---
+# VarsセクションでMySQL接続情報を定義
+vars:
+  db_username: "admin"  # RDSのusername
+  db_password: "dncewu38oQde4"  # RDSのパスワード
+  db_host: "testdbinstance.cab8a84fusu9.ap-northeast-1.rds.amazonaws.com"  # RDSのエンドポイント
 
+# タスクの定義
 - name: Install MySQL client libraries
   become: yes
   ansible.builtin.yum:
@@ -23,8 +19,6 @@
     owner: ec2-user
     group: ec2-user
     mode: '0644'
-
-
 
 - name: Ensure MySQL is installed
   become: yes
@@ -59,9 +53,5 @@
     login_user: "{{ db_username }}"
     login_password: "{{ db_password }}"
     login_host: "{{ db_host }}"
-    
-  vars:
-    db_username: "admin"  # RDSのusername
-    db_password: "dncewu38oQde4"  # RDSのパスワード
-    db_host: "testdbinstance.cab8a84fusu9.ap-northeast-1.rds.amazonaws.com"  # RDSのエンドポイント
+
 
