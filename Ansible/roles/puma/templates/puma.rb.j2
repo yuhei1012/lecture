@@ -132,3 +132,8 @@ bind "unix:///var/sample-app/raisetech-live8-sample-app/tmp/sockets/puma.sock"
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+
+# ホスト名を許可
+config.hosts << "ec2-52-196-170-136.ap-northeast-1.compute.amazonaws.com"
+
