@@ -1,7 +1,7 @@
 ---
 - name: MySQL and database setup
   hosts: all
-  become: yes
+  
 
   tasks:
     - name: Install MySQL client libraries
