@@ -1,34 +1,21 @@
 ---
-- name: Remove existing MySQL repository
-  ansible.builtin.yum_repository:
-    name: mysql57-community
-    state: absent
-
-- name: Add correct MySQL repository for Amazon Linux 2
-  ansible.builtin.yum_repository:
-    name: mysql57-community
-    description: MySQL 5.7 Community Server
-    baseurl: http://repo.mysql.com/yum/mysql-5.7-community/el/7/x86_64/
-    gpgcheck: yes
-    enabled: yes
-    gpgkey: http://repo.mysql.com/RPM-GPG-KEY-mysql
+- name: Add the MySQL Yum repository to webserver's repository list
+  become_user: root
+  yum:
+    name: https://repo.mysql.com/mysql84-community-release-el7-1.noarch.rpm
     state: present
 
-- name: Clean all yum cache
-  ansible.builtin.command: yum clean all
-  become: yes
+- name: Install mysql-devel
+  become_user: root
+  yum:
+    name: mysql-devel
+    state: present
 
-- name: Install Yarn without using MySQL repository
-  ansible.builtin.shell: |
-    yum-config-manager --disable mysql57-community
-    yum install yarn -y
-  become: yes
-
-- name: Install MySQL with repository enabled
-  ansible.builtin.shell: |
-    yum-config-manager --enable mysql57-community
-    yum install mysql-community-server -y
-  become: yes
+- name: Install mysql-community-server
+  become_user: root
+  yum:
+    name: mysql-community-server
+    state: present
 
 
 
