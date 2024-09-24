@@ -75,12 +75,12 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   # ホスト名を許可
-  config.hosts << "ec2-57-180-47-79.ap-northeast-1.compute.amazonaws.com"
+  config.hosts << "ec2-52-196-170-136.ap-northeast-1.compute.amazonaws.com"
 end
 
-[ec2-user@ip-10-0-3-252 templates]$ ls
+[ec2-user@ip-10-0-0-11 templates]$ ls
 development.rb.j2  puma.rb.j2  puma.service.j2
-[ec2-user@ip-10-0-3-252 templates]$ cat  puma.rb.j2 
+[ec2-user@ip-10-0-0-11 templates]$ cat  puma.rb.j2 
 # systemdで実行する際はディレクトリ指定が必要なのでコメントインする
 # directory "/var/www/rails/raisetech-live8-sample-app"
 
@@ -134,6 +134,5 @@ bind "unix:///var/sample-app/raisetech-live8-sample-app/tmp/sockets/puma.sock"
 plugin :tmp_restart
 
 
-# ホスト名を許可
-config.hosts << "ec2-52-196-170-136.ap-northeast-1.compute.amazonaws.com"
+
 
