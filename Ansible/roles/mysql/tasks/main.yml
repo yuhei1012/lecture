@@ -1,51 +1,56 @@
 ---
-- name: Install MySQL client libraries
+- name: Set Up MySQL
+  hosts: all
   become: yes
-  ansible.builtin.yum:
-    name: mysql-devel
-    state: present
+  tasks:
+    - name: Add MySQL official repository
+      ansible.builtin.yum_repository:
+        name: mysql57-community
+        description: MySQL 5.7 Community Server
+        baseurl: http://repo.mysql.com/yum/mysql-5.7-community/el/$releasever/$basearch/
+        gpgcheck: yes
+        enabled: yes
+        gpgkey: http://repo.mysql.com/RPM-GPG-KEY-mysql
+        state: present
 
-- name: Copy database.yml template
-  ansible.builtin.template:
-    src: database.yml.j2
-    dest: /var/sample-app/raisetech-live8-sample-app/config/database.yml
-    owner: ec2-user
-    group: ec2-user
-    mode: '0644'
+    - name: Ensure MySQL is installed
+      ansible.builtin.yum:
+        name: mysql-community-server
+        state: present
 
-- name: Ensure MySQL is installed
-  become: yes
-  ansible.builtin.yum:
-    name: mysql-community-server
-    state: present
+    - name: Start MySQL service
+      ansible.builtin.service:
+        name: mysqld
+        state: started
+        enabled: yes
 
-- name: Start MySQL service
-  become: yes
-  ansible.builtin.service:
-    name: mysqld
-    state: started
-    enabled: yes
+    - name: Copy database.yml template
+      ansible.builtin.template:
+        src: database.yml.j2
+        dest: /var/sample-app/raisetech-live8-sample-app/config/database.yml
+        owner: ec2-user
+        group: ec2-user
+        mode: '0644'
 
-- name: Create MySQL database
-  become: yes
-  ansible.builtin.mysql_db:
-    name: sample_db
-    state: present
-    login_user: "{{ db_username }}"
-    login_password: "{{ db_password }}"
-    login_host: "{{ db_host }}"
+    - name: Create MySQL database
+      ansible.builtin.mysql_db:
+        name: sample_db
+        state: present
+        login_user: "{{ db_username }}"
+        login_password: "{{ db_password }}"
+        login_host: "{{ db_host }}"
 
-- name: Create MySQL user and grant privileges
-  become: yes
-  ansible.builtin.mysql_user:
-    name: "{{ db_username }}"
-    password: "{{ db_password }}"
-    priv: "sample_db.*:ALL"
-    host: "%"
-    state: present
-    login_user: "{{ db_username }}"
-    login_password: "{{ db_password }}"
-    login_host: "{{ db_host }}"
+    - name: Create MySQL user and grant privileges
+      ansible.builtin.mysql_user:
+        name: "{{ db_username }}"
+        password: "{{ db_password }}"
+        priv: "sample_db.*:ALL"
+        host: "%"
+        state: present
+        login_user: "{{ db_username }}"
+        login_password: "{{ db_password }}"
+        login_host: "{{ db_host }}"
+
 
 
 
