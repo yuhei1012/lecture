@@ -1,3 +1,13 @@
+  vars:
+    db_username: "admin"  # RDSのusername
+    db_password: "dncewu38oQde4"  # RDSのパスワード
+    db_host: "testdbinstance.cab8a84fusu9.ap-northeast-1.rds.amazonaws.com"  # RDSのエンドポイント
+
+
+
+
+
+
 ---
 
 - name: Install MySQL client libraries
