@@ -22,13 +22,11 @@
         group: ec2-user
         mode: '0644'
 
-    - name: Create MySQL database
-      community.mysql.mysql_db:
-        name: raisetech_live8_sample_app_development
+    - name: Install mysql-community-server
+      become_user: root
+      yum:
+        name: mysql-community-server
         state: present
-        login_host: "{{ db_host }}"
-        login_user: "{{ db_username }}"
-        login_password: "{{ db_password }}"
 
 
 
