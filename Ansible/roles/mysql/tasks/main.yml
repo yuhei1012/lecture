@@ -1,5 +1,10 @@
 ---
-- name: Add MySQL official repository for Amazon Linux 2
+- name: Remove existing MySQL repository
+  ansible.builtin.yum_repository:
+    name: mysql57-community
+    state: absent
+
+- name: Add correct MySQL repository for Amazon Linux 2
   ansible.builtin.yum_repository:
     name: mysql57-community
     description: MySQL 5.7 Community Server
@@ -9,49 +14,22 @@
     gpgkey: http://repo.mysql.com/RPM-GPG-KEY-mysql
     state: present
 
-- name: Clear Yum cache
-  ansible.builtin.yum:
-    name: '*'
-    state: latest
-    update_cache: yes
+- name: Clean all yum cache
+  ansible.builtin.command: yum clean all
+  become: yes
 
-- name: Ensure MySQL is installed
-  ansible.builtin.yum:
-    name: mysql-community-server
-    state: present
+- name: Install Yarn without using MySQL repository
+  ansible.builtin.shell: |
+    yum-config-manager --disable mysql57-community
+    yum install yarn -y
+  become: yes
 
-- name: Start MySQL service
-  ansible.builtin.service:
-    name: mysqld
-    state: started
-    enabled: yes
+- name: Install MySQL with repository enabled
+  ansible.builtin.shell: |
+    yum-config-manager --enable mysql57-community
+    yum install mysql-community-server -y
+  become: yes
 
-- name: Copy database.yml template
-  ansible.builtin.template:
-    src: database.yml.j2
-    dest: /var/sample-app/raisetech-live8-sample-app/config/database.yml
-    owner: ec2-user
-    group: ec2-user
-    mode: '0644'
-
-- name: Create MySQL database
-  ansible.builtin.mysql_db:
-    name: sample_db
-    state: present
-    login_user: "{{ db_username }}"
-    login_password: "{{ db_password }}"
-    login_host: "{{ db_host }}"
-
-- name: Create MySQL user and grant privileges
-  ansible.builtin.mysql_user:
-    name: "{{ db_username }}"
-    password: "{{ db_password }}"
-    priv: "sample_db.*:ALL"
-    host: "%"
-    state: present
-    login_user: "{{ db_username }}"
-    login_password: "{{ db_password }}"
-    login_host: "{{ db_host }}"
 
 
 
