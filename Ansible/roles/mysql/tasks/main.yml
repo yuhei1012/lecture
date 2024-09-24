@@ -1,7 +1,6 @@
 ---
 - name: MySQL setup and configuration
-  hosts: all
-  become: yes
+
 
   vars:
     db_username: "admin"  # RDSのusername
