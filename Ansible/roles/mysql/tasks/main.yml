@@ -1,13 +1,19 @@
 ---
-- name: Add MySQL official repository
+- name: Add MySQL official repository for Amazon Linux 2
   ansible.builtin.yum_repository:
     name: mysql57-community
     description: MySQL 5.7 Community Server
-    baseurl: http://repo.mysql.com/yum/mysql-5.7-community/el/$releasever/$basearch/
+    baseurl: http://repo.mysql.com/yum/mysql-5.7-community/el/7/x86_64/
     gpgcheck: yes
     enabled: yes
     gpgkey: http://repo.mysql.com/RPM-GPG-KEY-mysql
     state: present
+
+- name: Clear Yum cache
+  ansible.builtin.yum:
+    name: '*'
+    state: latest
+    update_cache: yes
 
 - name: Ensure MySQL is installed
   ansible.builtin.yum:
@@ -46,6 +52,7 @@
     login_user: "{{ db_username }}"
     login_password: "{{ db_password }}"
     login_host: "{{ db_host }}"
+
 
 
 
