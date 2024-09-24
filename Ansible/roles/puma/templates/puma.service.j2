@@ -16,6 +16,7 @@ Type=simple
 User=ec2-user
 WorkingDirectory=/var/sample-app/raisetech-live8-sample-app
 ExecStart=/bin/bash -lc 'puma -C /var/sample-app/raisetech-live8-sample-app/config/puma.rb'
+ExecStop=/bin/kill -SIGTERM $MAINPID
 Restart=always
 RestartSec=10
 KillMode=process
