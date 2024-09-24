@@ -23,7 +23,7 @@
         mode: '0644'
 
     - name: Create MySQL database
-      mysql_db:
+      community.mysql.mysql_db:
         name: raisetech_live8_sample_app_development
         state: present
         login_host: "{{ db_host }}"
