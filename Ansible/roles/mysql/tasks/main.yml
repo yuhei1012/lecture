@@ -13,6 +13,16 @@
     owner: ec2-user
     group: ec2-user
     mode: '0644'
+
+
+- name: Create MySQL database
+  mysql_db:
+    name: raisetech_live8_sample_app_development
+    state: present
+    login_host: "{{ db_host }}"
+    login_user: "{{ db_username }}"
+    login_password: "{{ db_password }}"
+
   vars:
     db_username: "admin"  # RDSのusername
     db_password: "dncewu38oQde4"  # RDSのパスワード
