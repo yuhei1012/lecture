@@ -22,11 +22,7 @@
         group: ec2-user
         mode: '0644'
 
-    - name: Install mysql-community-server
-      become_user: root
-      yum:
-        name: mysql-community-server
-        state: present
+  
 
 
 
