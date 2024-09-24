@@ -1,22 +1,12 @@
 ---
-- name: Disable MySQL repository
-  ansible.builtin.shell: |
-    yum-config-manager --disable mysql57-community
-  become: yes
-
-- name: Install Yarn
-  ansible.builtin.yum:
-    name: yarn
-    state: present
-  become: yes
-
+# MySQLリポジトリの修正
 - name: Remove existing MySQL repository
   ansible.builtin.yum_repository:
     name: mysql57-community
     state: absent
   become: yes
 
-- name: Add MySQL official repository for Amazon Linux 2
+- name: Add correct MySQL repository for Amazon Linux 2
   ansible.builtin.yum_repository:
     name: mysql57-community
     description: MySQL 5.7 Community Server
@@ -27,11 +17,13 @@
     state: present
   become: yes
 
+# MySQLのインストール
 - name: Install MySQL
   ansible.builtin.yum:
     name: mysql-community-server
     state: present
   become: yes
+
 
 
 
