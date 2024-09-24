@@ -14,7 +14,10 @@
     rails_env: development
     aws_region: "{{ lookup('env', 'AWS_REGION') | default('ap-northeast-1', true) }}"
     s3_bucket_name: "{{ lookup('env', 'S3_BUCKET_NAME') | default('lecture13', true) }}"
-
+　　　　　　　　db_username: "admin"  # RDSのusername
+    db_password: "dncewu38oQde4"  # RDSのパスワード
+    db_host: "testdbinstance.cab8a84fusu9.ap-northeast-1.rds.amazonaws.com"  # RDSのエンドポイント
+    
   tasks:
     - name: Install Git
       ansible.builtin.yum:
