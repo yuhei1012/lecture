@@ -1,8 +1,8 @@
 version: 2.1
 orbs:
-   python: circleci/python@2.0.3
-   aws-cli: circleci/aws-cli@3.1.5
-   ansible-playbook: orbss/ansible-playbook@0.0.5
+  python: circleci/python@2.0.3
+  aws-cli: circleci/aws-cli@3.1.5
+  ansible-playbook: orbss/ansible-playbook@0.0.5
 
 jobs:
   cfn-lint:
@@ -59,38 +59,32 @@ jobs:
               --template-file lecture13/yaml_S3.yml \
               --stack-name MyS3Stack
 
-　　　　# Ansibleの実行ジョブ
-　execute-ansible:
-  　executor: python/default
-  　steps:
-    　- checkout
-   　 - ansible-playbook/install:
-       　 version: 2.9.27
-   　 - run:
-       　 name: Set up SSH Key
-        　command: |
-          　echo "$ANSIBLE_PRIVATE_KEY" > ~/.ssh/t123456.pem
-          　chmod 600 ~/.ssh/t123456.pem
-    　- run:
-        　name: Verify SSH Key Exists
-        　command: ls -l ~/.ssh/t123456.pem
-    　- add_ssh_keys:
-       　 fingerprints:
-          　- "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
-    　- run:
-        　name: Install community.mysql Collection
-        　command: |
-         　 ansible-galaxy collection install community.mysql
-    　- run:
-        　name: Run Ansible Playbook
-        　command: |
-          　ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user --private-key ~/.ssh/t123456.pem --ssh-common-args='-o StrictHostKeyChecking=no'
-
-　　　　
-
-
-
-
+  # Ansibleの実行ジョブ
+  execute-ansible:
+    executor: python/default
+    steps:
+      - checkout
+      - ansible-playbook/install:
+          version: 2.9.27
+      - run:
+          name: Set up SSH Key
+          command: |
+            echo "$ANSIBLE_PRIVATE_KEY" > ~/.ssh/t123456.pem
+            chmod 600 ~/.ssh/t123456.pem
+      - run:
+          name: Verify SSH Key Exists
+          command: ls -l ~/.ssh/t123456.pem
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
+      - run:
+          name: Install community.mysql Collection
+          command: |
+            ansible-galaxy collection install community.mysql
+      - run:
+          name: Run Ansible Playbook
+          command: |
+            ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user --private-key ~/.ssh/t123456.pem --ssh-common-args='-o StrictHostKeyChecking=no'
 
 workflows:
   version: 2
@@ -103,3 +97,4 @@ workflows:
       - execute-ansible:
           requires:
             - cfn-execute
+
