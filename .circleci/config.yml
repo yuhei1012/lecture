@@ -15,11 +15,13 @@ jobs:
           command: |
             cfn-lint -i W3002 -t lecture13/*.yml
 
-  cfn-execute:
-    executor: aws-cli/default
-    steps:
-      - checkout
-      - aws-cli/setup:
+  executors:
+  python-executor:
+    docker:
+      - image: cimg/python:3.8  # 使用するイメージ
+    working_directory: ~/repo
+    resource_class: medium
+    environment:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-region: AWS_DEFAULT_REGION
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
