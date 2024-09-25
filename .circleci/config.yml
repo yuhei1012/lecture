@@ -1,23 +1,17 @@
 version: 2.1
 orbs:
-  python: circleci/python@2.0.3
-  aws-cli: circleci/aws-cli@3.1.5
-  ansible-playbook: orbss/ansible-playbook@0.0.5
+   python: circleci/python@2.0.3
+   aws-cli: circleci/aws-cli@3.1.5
+   ansible-playbook: orbss/ansible-playbook@0.0.5
+
+
 
 jobs:
   cfn-lint:
     executor: python/default
     steps:
       - checkout
-      - restore_cache:  # pipキャッシュを復元
-          keys:
-            - v1-pip-cache-{{ checksum "requirements.txt" }}
-            - v1-pip-cache-
       - run: pip install cfn-lint
-      - save_cache:  # pipキャッシュを保存
-          key: v1-pip-cache-{{ checksum "requirements.txt" }}
-          paths:
-            - ~/.cache/pip
       - run:
           name: run cfn-lint
           command: |
@@ -37,6 +31,7 @@ jobs:
             aws cloudformation deploy \
               --template-file lecture13/lecture13_cfn_network.yml \
               --stack-name MyNetworkStack
+
       - run:
           name: Deploy EC2 Stack
           command: |
@@ -44,18 +39,21 @@ jobs:
               --template-file lecture13/lecture13_cfn_ec2.yml \
               --stack-name MyEC2Stack \
               --capabilities CAPABILITY_NAMED_IAM
+
       - run:
           name: Deploy ALB Stack
           command: |
             aws cloudformation deploy \
               --template-file lecture13/lecture13_ALB.yml \
               --stack-name MyALBStack
+
       - run:
           name: Deploy RDS Stack
           command: |
             aws cloudformation deploy \
               --template-file lecture13/lecture13_cfn_RDS.yml \
               --stack-name MyRDSStack
+
       - run:
           name: Deploy S3 Stack
           command: |
@@ -65,50 +63,26 @@ jobs:
 
   # Ansibleの実行ジョブ
   execute-ansible:
-    machine:
-      image: amazonlinux
-  steps:
-    - checkout
-    - run:
-        name: Install prerequisites (tar, which, and pip)
-        command: |
-          sudo yum update -y
-          sudo yum install -y tar which python3-pip  # tar, which, pip をインストール
-    - restore_cache:  # ansible-galaxyのキャッシュを復元
-        keys:
-          - v1-ansible-galaxy-cache-{{ .Branch }}
-          - v1-ansible-galaxy-cache-
-    - run:
-        name: Install Ansible
-        command: |
-          pip3 install --user ansible
-    - run:
-        name: Install MySQL client libraries
-        command: sudo yum install -y mysql-libs
-    - run:
-        name: Set up SSH Key
-        command: |
-          echo "$ANSIBLE_PRIVATE_KEY" > ~/.ssh/t123456.pem
-          chmod 600 ~/.ssh/t123456.pem
-    - run:
-        name: Verify SSH Key Exists
-        command: ls -l ~/.ssh/t123456.pem
-    - add_ssh_keys:
-        fingerprints:
-          - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
-    - run:
-        name: Install community.mysql Collection
-        command: |
-          ansible-galaxy collection install community.mysql
-    - save_cache:  # ansible-galaxyのキャッシュを保存
-        key: v1-ansible-galaxy-cache-{{ .Branch }}
-        paths:
-          - ~/.ansible
-    - run:
-        name: Run Ansible Playbook
-        command: |
-          ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user --private-key ~/.ssh/t123456.pem --ssh-common-args='-o StrictHostKeyChecking=no'
+    executor: python/default
+    steps:
+      - checkout
+      # SSHキーの追加（フィンガープリントの設定）
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
 
+      # Ansibleのインストール（apt-get）
+      - run:
+          name: Install Ansible
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y ansible
+
+      # Ansible Playbookの実行（パスをlecture13/Ansibleに修正）
+      - run:
+          name: Run Ansible Playbook
+          command: |
+            ansible-playbook -i lecture13/Ansible/inventory lecture13/Ansible/playbook.yml -u ec2-user --private-key ~/.ssh/id_rsa
 
 workflows:
   version: 2
@@ -121,5 +95,4 @@ workflows:
       - execute-ansible:
           requires:
             - cfn-execute
-
 
