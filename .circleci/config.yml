@@ -65,7 +65,8 @@ jobs:
 
   # Ansibleの実行ジョブ
   execute-ansible:
-    executor: python/default
+    docker:
+    - image: amazonlinux:2  # Amazon Linux 2 の Docker イメージを指定
     steps:
       - checkout
       - restore_cache:  # ansible-galaxyのキャッシュを復元
