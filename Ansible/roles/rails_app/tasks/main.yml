@@ -105,11 +105,15 @@
     executable: /bin/bash
 
     
-- name: Precompile assets for development environment
+
+
+  - name: Precompile assets with limited resources
   ansible.builtin.shell: |
     source /etc/profile.d/rbenv.sh
-    bundle exec rails assets:precompile
+    RAILS_ENV=development bundle exec rails assets:precompile -j 2
   args:
     chdir: /var/sample-app/raisetech-live8-sample-app
     executable: /bin/bash
+  async: 1200
+  poll: 10
   tags: deploy
