@@ -91,3 +91,16 @@
   args:
     executable: /bin/bash
   tags: rails_app
+
+
+
+- name: Install mysql2 gem with bundler
+  become_user: ec2-user
+  shell: |
+    source /etc/profile.d/rbenv.sh
+    bundle config build.mysql2 --with-ldflags=-L/usr/lib64/mysql  # 正しいパスを設定
+    bundle install
+  args:
+    chdir: /var/sample-app/raisetech-live8-sample-app
+    executable: /bin/bash
+
