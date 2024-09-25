@@ -70,39 +70,44 @@ jobs:
               --stack-name MyS3Stack
 
   # Ansibleの実行ジョブ
-  execute-ansible:
-    executor: python/default
-    steps:
-      - checkout
-      - restore_cache:  # ansible-galaxyのキャッシュを復元
-          keys:
-            - v1-ansible-galaxy-cache-{{ checksum "requirements.yml" }}
-            - v1-ansible-galaxy-cache-
-      - ansible-playbook/install:
-          version: 2.9.27
-      - run:
-          name: Set up SSH Key
-          command: |
-            echo "$ANSIBLE_PRIVATE_KEY" > ~/.ssh/t123456.pem
-            chmod 600 ~/.ssh/t123456.pem
-      - run:
-          name: Verify SSH Key Exists
-          command: ls -l ~/.ssh/t123456.pem
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
-      - run:
-          name: Install community.mysql Collection
-          command: |
-            ansible-galaxy collection install community.mysql
-      - save_cache:  # ansible-galaxyのキャッシュを保存
-          key: v1-ansible-galaxy-cache-{{ checksum "requirements.yml" }}
-          paths:
-            - ~/.ansible
-      - run:
-          name: Run Ansible Playbook
-          command: |
-            ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user --private-key ~/.ssh/t123456.pem --ssh-common-args='-o StrictHostKeyChecking=no'
+ execute-ansible:
+  executor: python/default
+  steps:
+    - checkout
+    - restore_cache:  # ansible-galaxyのキャッシュを復元
+        keys:
+          - v1-ansible-galaxy-cache-{{ .Branch }}
+          - v1-ansible-galaxy-cache-
+    - ansible-playbook/install:
+        version: 2.9.27
+    - run:
+        name: Install MySQL client libraries
+        become: yes
+        command: sudo yum install -y mysql-libs
+    - run:
+        name: Set up SSH Key
+        command: |
+          echo "$ANSIBLE_PRIVATE_KEY" > ~/.ssh/t123456.pem
+          chmod 600 ~/.ssh/t123456.pem
+    - run:
+        name: Verify SSH Key Exists
+        command: ls -l ~/.ssh/t123456.pem
+    - add_ssh_keys:
+        fingerprints:
+          - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
+    - run:
+        name: Install community.mysql Collection
+        command: |
+          ansible-galaxy collection install community.mysql
+    - save_cache:  # ansible-galaxyのキャッシュを保存
+        key: v1-ansible-galaxy-cache-{{ .Branch }}
+        paths:
+          - ~/.ansible
+    - run:
+        name: Run Ansible Playbook
+        command: |
+          ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user --private-key ~/.ssh/t123456.pem --ssh-common-args='-o StrictHostKeyChecking=no'
+
 
 workflows:
   version: 2
