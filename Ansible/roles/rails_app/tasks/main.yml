@@ -104,3 +104,12 @@
     chdir: /var/sample-app/raisetech-live8-sample-app
     executable: /bin/bash
 
+    
+- name: Precompile assets for development environment
+  ansible.builtin.shell: |
+    source /etc/profile.d/rbenv.sh
+    bundle exec rails assets:precompile
+  args:
+    chdir: /var/sample-app/raisetech-live8-sample-app
+    executable: /bin/bash
+  tags: deploy
