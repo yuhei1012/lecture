@@ -35,6 +35,19 @@
     name: mysql-community-libs
     state: present
 
+
+- name: Set MySQL library path
+  become_user: root
+  lineinfile:
+    path: /etc/environment
+    line: 'LD_LIBRARY_PATH=/usr/lib64/mysql:$LD_LIBRARY_PATH'  # パスを反映
+    create: yes
+
+- name: Run ldconfig to update library paths
+  become_user: root
+  command: ldconfig
+
+
 - name: Install mysql2 gem with bundler
   become_user: ec2-user
   shell: |
