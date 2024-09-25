@@ -29,6 +29,22 @@
     name: mysql-community-devel
     state: present
 
+- name: Ensure MySQL client libraries are installed
+  become_user: root
+  yum:
+    name: mysql-community-libs
+    state: present
+
+- name: Install mysql2 gem with bundler
+  become_user: ec2-user
+  shell: |
+    source /etc/profile.d/rbenv.sh
+    bundle config build.mysql2 --with-ldflags=-L/usr/lib64/mysql
+    bundle install --with mysql2
+  args:
+    chdir: /var/sample-app/raisetech-live8-sample-app
+    executable: /bin/bash
+
 - name: Start MySQL service
   become_user: root
   service:
