@@ -42,10 +42,27 @@
     recurse: yes
   tags: S3
 
-- name: Precompile assets for development environment
+# ImageMagickのインストール
+- name: Install ImageMagick package
+  ansible.builtin.yum:
+    name: ImageMagick
+    state: present
+  tags: S3
+
+# mini_magick gemをGemfileに追加
+- name: Ensure mini_magick is added to Gemfile
+  lineinfile:
+    path: /var/sample-app/raisetech-live8-sample-app/Gemfile
+    regexp: '^gem .mini_magick.'
+    line: 'gem "mini_magick"'
+    insertafter: 'gem .image_processing.'  # 適切な場所に挿入
+  tags: S3
+
+# Gemfileが更新されたので、bundle installを実行
+- name: Run bundle install
   ansible.builtin.shell: |
     source /etc/profile.d/rbenv.sh
-    bundle exec rails assets:precompile
+    bundle install
   args:
     chdir: /var/sample-app/raisetech-live8-sample-app
     executable: /bin/bash
