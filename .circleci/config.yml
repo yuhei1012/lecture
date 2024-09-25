@@ -65,8 +65,8 @@ jobs:
 
   # Ansibleの実行ジョブ
   execute-ansible:
-  docker:
-    - image: amazonlinux:2  # Amazon Linux 2 の Docker イメージを使用
+    machine:
+      image: amazonlinux
   steps:
     - checkout
     - run:
