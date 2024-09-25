@@ -108,7 +108,7 @@
 
 
   - name: Precompile assets with limited resources
-  ansible.builtin.shell: |
+    ansible.builtin.shell: |
     source /etc/profile.d/rbenv.sh
     RAILS_ENV=development bundle exec rails assets:precompile -j 2
   args:
