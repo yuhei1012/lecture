@@ -35,7 +35,7 @@ jobs:
           name: Deploy Network Stack
           command: |
             aws cloudformation deploy \
-              --template-file lecture13/lecture12_cfn_network.yml \
+              --template-file lecture13/lecture13_cfn_network.yml \
               --stack-name MyNetworkStack
       - run:
           name: Deploy Network Stack
