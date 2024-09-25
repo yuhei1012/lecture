@@ -51,12 +51,14 @@
 - name: Install mysql2 gem with bundler
   become_user: ec2-user
   shell: |
-    source /etc/profile.d/rbenv.sh
-    bundle config build.mysql2 --with-ldflags=-L/usr/lib64/mysql
-    bundle install --with mysql2
+    export PATH="/usr/local/rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
+    bundle config build.mysql2 --with-ldflags=-L/usr/lib64/mysql  # ここもfindコマンドで確認したパスに置き換える
+    bundle install
   args:
     chdir: /var/sample-app/raisetech-live8-sample-app
     executable: /bin/bash
+
 
 - name: Start MySQL service
   become_user: root
