@@ -77,9 +77,17 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
-      - ruby/install:
-          version: 3.2.3
-          
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"  # あなたのSSH鍵のフィンガープリント
+      - run:
+          name: Install Serverspec Gem
+          command: |
+            gem install serverspec
+      - run:
+          name: Run Serverspec Tests
+          command: |
+            rake spec
 
 
 
