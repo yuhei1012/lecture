@@ -1,9 +1,7 @@
-- name: Ensure Python and pip are installed
-  become: yes
-  yum:
-    name: python3-pip
-    state: present
-
+---
+# プレイブックの最上部にvarsを移動
+vars:
+  ansible_python_interpreter: /usr/bin/python3
 
 - name: Ensure Python and pip3 are installed
   become: yes
@@ -18,10 +16,6 @@
       - boto3
       - botocore
     executable: pip3
-
-vars:
-  ansible_python_interpreter: /usr/bin/python3
-
 
 # 以下はMariaDBの削除とMySQLインストールのタスク
 - name: Remove MariaDB (if exists)
