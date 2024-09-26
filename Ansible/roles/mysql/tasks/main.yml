@@ -4,12 +4,24 @@
     name: python3-pip
     state: present
 
-- name: Install boto3 and botocore using pip
+
+- name: Ensure Python and pip3 are installed
+  become: yes
+  yum:
+    name: python3-pip
+    state: present
+
+- name: Install boto3 and botocore using pip3
   become: yes
   pip:
     name:
       - boto3
       - botocore
+    executable: pip3
+
+vars:
+  ansible_python_interpreter: /usr/bin/python3
+
 
 # 以下はMariaDBの削除とMySQLインストールのタスク
 - name: Remove MariaDB (if exists)
