@@ -13,7 +13,7 @@
       - boto3
       - botocore
       
-- hosts: localhost
+
   vars:
     ansible_python_interpreter: /usr/bin/python3  # Python3のパスを指定
   tasks:
