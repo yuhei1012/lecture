@@ -72,11 +72,10 @@ jobs:
             - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
 
       # Ansibleのインストール（apt-get）
-      - run:
+       - run:
           name: Install Ansible
           command: |
-            sudo apt-get update
-            sudo apt-get install -y ansible
+            pip install ansible boto3
 
       # Ansible Playbookの実行（パスをlecture13/Ansibleに修正）
       - run:
