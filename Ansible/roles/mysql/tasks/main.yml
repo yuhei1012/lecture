@@ -1,108 +1,71 @@
 ---
-# varsはプレイブックの最上部、またはタスクブロック外に配置します。
-vars:
-  ansible_python_interpreter: /usr/bin/python3
-
-# Python3とpip3のインストール
-- name: Ensure Python and pip3 are installed
-  become: yes
-  yum:
-    name: python3-pip
-    state: present
-
-# boto3とbotocoreのインストール
-- name: Install boto3 and botocore using pip3
-  become: yes
-  pip:
-    name:
-      - boto3
-      - botocore
-    executable: pip3
-
-# MariaDB削除とMySQLインストールタスク
-- name: Remove MariaDB (if exists)
-  become: yes
+- name: remove the MariaDB
+  become_user: root
   yum:
     name: mariadb-*
     state: absent
 
 - name: Import MySQL GPG key
-  become: yes
+  become_user: root
   shell: rpm --import "https://repo.mysql.com/RPM-GPG-KEY-mysql-2023"
   args:
     creates: /var/lib/mysql/mysql80-community-release-el7-7.noarch.rpm
 
-- name: Install the MySQL RPM from a remote repository
-  become: yes
+- name: install the mysql rpm from a remote repo
+  become_user: root
   yum:
     name: 'https://repo.mysql.com//mysql80-community-release-el7-7.noarch.rpm'
     state: present
 
-- name: Install MySQL community server
-  become: yes
-  yum:
+- name: install mysql-community-server
+  become_user: root
+  yum: 
     name: mysql-community-server
     state: present
 
-- name: Install MySQL development libraries
-  become: yes
-  yum:
+- name: install mysql-community-devel
+  become_user: root
+  yum: 
     name: mysql-community-devel
     state: present
 
 - name: Ensure MySQL client libraries are installed
-  become: yes
+  become_user: root
   yum:
     name: mysql-community-libs
     state: present
 
-# 環境変数にMySQLライブラリパスを設定
+
 - name: Set MySQL library path
-  become: yes
+  become_user: root
   lineinfile:
     path: /etc/environment
-    line: 'LD_LIBRARY_PATH=/usr/lib64/mysql:$LD_LIBRARY_PATH'
+    line: 'LD_LIBRARY_PATH=/usr/lib64/mysql:$LD_LIBRARY_PATH'  # パスを反映
     create: yes
 
-# ldconfigコマンドを実行
 - name: Run ldconfig to update library paths
-  become: yes
+  become_user: root
   command: ldconfig
 
-# AWS Secrets ManagerからRDSのクレデンシャルを取得
-- name: Retrieve RDS credentials from AWS Secrets Manager
-  aws_secret:
-    name: "arn:aws:secretsmanager:ap-northeast-1:502878366443:secret:db/password-bQUKZn"
-    region: "ap-northeast-1"
-  register: rds_credentials
 
-# Secretsから取得した情報をデータベース変数に設定
-- name: Set database variables from secrets
-  set_fact:
-    db_username: "{{ rds_credentials.secret.username }}"
-    db_password: "{{ rds_credentials.secret.password }}"
-    db_host: "testdbinstance.cab8a84fusu9.ap-northeast-1.rds.amazonaws.com"
-
-# bundlerを使ってmysql2 gemをインストール
 - name: Install mysql2 gem with bundler
   become_user: ec2-user
   shell: |
     export PATH="/usr/local/rbenv/bin:$PATH"
     eval "$(rbenv init -)"
-    bundle config build.mysql2 --with-ldflags=-L/usr/lib64/mysql
+    bundle config build.mysql2 --with-ldflags=-L/usr/lib64/mysql  # ここもfindコマンドで確認したパスに置き換える
     bundle install
   args:
     chdir: /var/sample-app/raisetech-live8-sample-app
     executable: /bin/bash
 
-# MySQLサービスを開始
+
 - name: Start MySQL service
-  become: yes
+  become_user: root
   service:
     name: mysqld
     state: started
 
-# database.ymlテンプレートをコピー
 - name: Copy database.yml template
   ansible.builtin.template:
     src: database.yml.j2
@@ -111,9 +74,10 @@ vars:
     group: ec2-user
     mode: '0644'
   vars:
-    db_username: "{{ db_username }}"
-    db_password: "{{ db_password }}"
-    db_host: "{{ db_host }}"
+    db_username: "admin"  # RDSのusername
+    db_password: "dncewu38oQde4"  # RDSのパスワード
+    db_host: "testdbinstance.cab8a84fusu9.ap-northeast-1.rds.amazonaws.com"  # RDSのエンドポイント
+
 
 
 
