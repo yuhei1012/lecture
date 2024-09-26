@@ -1,4 +1,10 @@
 ---
+# vars はプレイブックの最上部に定義します
+vars:
+  db_username: "{{ lookup('env', 'DB_USERNAME') }}"
+  db_password: "{{ lookup('env', 'DB_PASSWORD') }}"
+  db_host: "{{ lookup('env', 'DB_HOST') }}"
+
 - name: remove the MariaDB
   become_user: root
   yum:
@@ -35,30 +41,27 @@
     name: mysql-community-libs
     state: present
 
-
 - name: Set MySQL library path
   become_user: root
   lineinfile:
     path: /etc/environment
-    line: 'LD_LIBRARY_PATH=/usr/lib64/mysql:$LD_LIBRARY_PATH'  # パスを反映
+    line: 'LD_LIBRARY_PATH=/usr/lib64/mysql:$LD_LIBRARY_PATH'
     create: yes
 
 - name: Run ldconfig to update library paths
   become_user: root
   command: ldconfig
 
-
 - name: Install mysql2 gem with bundler
   become_user: ec2-user
   shell: |
     export PATH="/usr/local/rbenv/bin:$PATH"
     eval "$(rbenv init -)"
-    bundle config build.mysql2 --with-ldflags=-L/usr/lib64/mysql  # ここもfindコマンドで確認したパスに置き換える
+    bundle config build.mysql2 --with-ldflags=-L/usr/lib64/mysql
     bundle install
   args:
     chdir: /var/sample-app/raisetech-live8-sample-app
     executable: /bin/bash
-
 
 - name: Start MySQL service
   become_user: root
@@ -73,11 +76,11 @@
     owner: ec2-user
     group: ec2-user
     mode: '0644'
-      
-vars:
-    db_username: "{{ db_username }}"
-    db_password: "{{ db_password }}"
-    db_host: "{{ db_host }}"
+    vars:
+      db_username: "{{ db_username }}"
+      db_password: "{{ db_password }}"
+      db_host: "{{ db_host }}"
+
 
 
 
