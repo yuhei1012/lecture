@@ -76,10 +76,7 @@ vars:
     owner: ec2-user
     group: ec2-user
     mode: '0644'
-    vars:
-      db_username: "{{ db_username }}"
-      db_password: "{{ db_password }}"
-      db_host: "{{ db_host }}"
+
 
 
 
