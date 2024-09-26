@@ -2,9 +2,9 @@ require 'serverspec'
 require 'net/ssh'
 
 # ターゲットホストにSSHで接続するための設定
-host = 'TARGET_EC2_IP_ADDRESS' # ここにターゲットEC2のIPアドレスを指定
+host = '52.196.170.136' # ここにターゲットEC2のIPアドレスを指定
 user = 'ec2-user'  # 接続に使うユーザー名
-key  = '~/.ssh/your_private_key.pem'  # 秘密鍵のパスを指定
+key  = '~/.ssh/ANSIBLE_PRIVATE_KEY'  # 秘密鍵のパスを指定
 
 # SSHの設定
 options = Net::SSH::Config.for(host)
