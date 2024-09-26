@@ -73,9 +73,9 @@ jobs:
 
       # Ansibleのインストール（apt-get）
        - run:
-          name: Install Ansible
-          command: |
-            pip install ansible boto3
+           name: Install Ansible
+           command: |
+             pip install ansible boto3
 
       # Ansible Playbookの実行（パスをlecture13/Ansibleに修正）
       - run:
