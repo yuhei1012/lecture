@@ -1,82 +1,95 @@
 ---
-- name: remove the MariaDB
-  become_user: root
-  yum:
-    name: mariadb-*
-    state: absent
+- name: MySQL and RDS configuration with security using AWS Secrets Manager
+  hosts: localhost
+  tasks:
+    - name: Remove MariaDB (if exists)
+      become_user: root
+      yum:
+        name: mariadb-*
+        state: absent
 
-- name: Import MySQL GPG key
-  become_user: root
-  shell: rpm --import "https://repo.mysql.com/RPM-GPG-KEY-mysql-2023"
-  args:
-    creates: /var/lib/mysql/mysql80-community-release-el7-7.noarch.rpm
+    - name: Import MySQL GPG key
+      become_user: root
+      shell: rpm --import "https://repo.mysql.com/RPM-GPG-KEY-mysql-2023"
+      args:
+        creates: /var/lib/mysql/mysql80-community-release-el7-7.noarch.rpm
 
-- name: install the mysql rpm from a remote repo
-  become_user: root
-  yum:
-    name: 'https://repo.mysql.com//mysql80-community-release-el7-7.noarch.rpm'
-    state: present
+    - name: Install the MySQL RPM from a remote repository
+      become_user: root
+      yum:
+        name: 'https://repo.mysql.com//mysql80-community-release-el7-7.noarch.rpm'
+        state: present
 
-- name: install mysql-community-server
-  become_user: root
-  yum: 
-    name: mysql-community-server
-    state: present
+    - name: Install MySQL community server
+      become_user: root
+      yum:
+        name: mysql-community-server
+        state: present
 
-- name: install mysql-community-devel
-  become_user: root
-  yum: 
-    name: mysql-community-devel
-    state: present
+    - name: Install MySQL development libraries
+      become_user: root
+      yum:
+        name: mysql-community-devel
+        state: present
 
-- name: Ensure MySQL client libraries are installed
-  become_user: root
-  yum:
-    name: mysql-community-libs
-    state: present
+    - name: Ensure MySQL client libraries are installed
+      become_user: root
+      yum:
+        name: mysql-community-libs
+        state: present
 
+    - name: Set MySQL library path
+      become_user: root
+      lineinfile:
+        path: /etc/environment
+        line: 'LD_LIBRARY_PATH=/usr/lib64/mysql:$LD_LIBRARY_PATH'
+        create: yes
 
-- name: Set MySQL library path
-  become_user: root
-  lineinfile:
-    path: /etc/environment
-    line: 'LD_LIBRARY_PATH=/usr/lib64/mysql:$LD_LIBRARY_PATH'  # パスを反映
-    create: yes
+    - name: Run ldconfig to update library paths
+      become_user: root
+      command: ldconfig
 
-- name: Run ldconfig to update library paths
-  become_user: root
-  command: ldconfig
+    - name: Retrieve RDS credentials from AWS Secrets Manager
+      aws_secret:
+        name: "db/password"  # シークレット名を指定
+        region: "ap-northeast-1"  # リージョンを指定
+      register: rds_credentials
 
+    - name: Set database variables from secrets
+      set_fact:
+        db_username: "{{ rds_credentials.secret.username }}"
+        db_password: "{{ rds_credentials.secret.password }}"
+        db_host: "testdbinstance.cab8a84fusu9.ap-northeast-1.rds.amazonaws.com"  # RDSのエンドポイント
 
-- name: Install mysql2 gem with bundler
-  become_user: ec2-user
-  shell: |
-    export PATH="/usr/local/rbenv/bin:$PATH"
-    eval "$(rbenv init -)"
-    bundle config build.mysql2 --with-ldflags=-L/usr/lib64/mysql  # ここもfindコマンドで確認したパスに置き換える
-    bundle install
-  args:
-    chdir: /var/sample-app/raisetech-live8-sample-app
-    executable: /bin/bash
+    - name: Install mysql2 gem with bundler
+      become_user: ec2-user
+      shell: |
+        export PATH="/usr/local/rbenv/bin:$PATH"
+        eval "$(rbenv init -)"
+        bundle config build.mysql2 --with-ldflags=-L/usr/lib64/mysql
+        bundle install
+      args:
+        chdir: /var/sample-app/raisetech-live8-sample-app
+        executable: /bin/bash
 
+    - name: Start MySQL service
+      become_user: root
+      service:
+        name: mysqld
+        state: started
 
-- name: Start MySQL service
-  become_user: root
-  service:
-    name: mysqld
-    state: started
+    - name: Copy database.yml template
+      ansible.builtin.template:
+        src: database.yml.j2
+        dest: /var/sample-app/raisetech-live8-sample-app/config/database.yml
+        owner: ec2-user
+        group: ec2-user
+        mode: '0644'
+      vars:
+        db_username: "{{ db_username }}"
+        db_password: "{{ db_password }}"
+        db_host: "{{ db_host }}"
 
-- name: Copy database.yml template
-  ansible.builtin.template:
-    src: database.yml.j2
-    dest: /var/sample-app/raisetech-live8-sample-app/config/database.yml
-    owner: ec2-user
-    group: ec2-user
-    mode: '0644'
-  vars:
-    db_username: "admin"  # RDSのusername
-    db_password: "dncewu38oQde4"  # RDSのパスワード
-    db_host: "testdbinstance.cab8a84fusu9.ap-northeast-1.rds.amazonaws.com"  # RDSのエンドポイント
 
 
 
