@@ -8,10 +8,10 @@ set :backend, :ssh
 options = Net::SSH::Config.for(host)
 
 # EC2のパブリックIPまたはDNS名を指定
-host = '52.196.170.136'
+host = 'EC2_PUBLIC_IP'
 user = 'ec2-user' # デフォルトユーザー
 
-options[:user] = user
+options[:user] = 'ec2-user'
 options[:keys] = ['~/.ssh/t123456.pem']  # SSH秘密鍵のパス
 options[:keys_only] = true
 options[:auth_methods] = ['publickey']
