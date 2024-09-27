@@ -100,7 +100,7 @@ jobs:
       - run:
           name: Run Serverspec Tests
           command: |
-            cd lecture/serverspec
+            cd serverspec
             bundle exec rake spec
 
 workflows:
