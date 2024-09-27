@@ -77,17 +77,22 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"  # あなたのSSH鍵のフィンガープリント
       - run:
-          name: Install Serverspec Gem
+          name: Install Bundler
+          command: gem install bundler
+      - run:
+          name: Install Serverspec
+          command: gem install serverspec
+      - run:
+          name: Initialize Serverspec (if needed)
           command: |
-            gem install serverspec
+            serverspec-init
+            bundle init
+            echo "gem 'serverspec'" >> Gemfile
+            bundle install
       - run:
           name: Run Serverspec Tests
-          command: |
-            rake spec
+          command: rake spec
 
 
 
