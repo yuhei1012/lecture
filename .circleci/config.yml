@@ -77,26 +77,44 @@ jobs:
       - image: cimg/ruby:2.7-node  # 適切なDockerイメージを指定
     steps:
       - checkout  # GitHubリポジトリの内容をチェックアウト
-      # SSHキーの追加
+      
+      # ワークスペースを利用して、他のジョブから環境変数などを引き継ぎたい場合はここでattach
+      # - attach_workspace:
+      #    at: .
+
+      # SSHキーを追加
       - add_ssh_keys:
           fingerprints:
             - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
+
       # SSHホストキーのチェックを無効化
       - run:
           name: Disable SSH Host Key Checking
           command: |
             echo "Host *" >> ~/.ssh/config
             echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+      
+      # ~/.ssh/configにEC2接続用の設定を追加
+      - run:
+          name: Setup SSH config for EC2
+          command: |
+            echo "Host target" >> ~/.ssh/config
+            echo "  HostName ${EC2_PUBLIC_IP}" >> ~/.ssh/config  # ここでEC2のPublic IPを環境変数として指定
+            echo "  User ec2-user" >> ~/.ssh/config
+            echo "  IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config  # CircleCIに登録したSSHキーを使用
+
       # Bundlerのインストール
       - run:
           name: Install Bundler
           command: gem install bundler
+
       # Serverspec用の依存関係をインストール
       - run:
           name: Install Dependencies
           command: |
             cd serverspec  # GitHub内のServerspecディレクトリに移動
             bundle install --path vendor/bundle
+
       # Serverspecのテストを実行
       - run:
           name: Run Serverspec Tests
