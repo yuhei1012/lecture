@@ -74,32 +74,35 @@ jobs:
             ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user  --private-key ~/.ssh/t123456.pem --ssh-common-args='-o StrictHostKeyChecking=no'
 
   execute-serverspec:
-    execute-serverspec:
-    executor: ruby/default
-    steps:
-      - checkout
-      
-      # SSHキーを追加 (既に設定済みの場合はスキップ)
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
+  docker:
+    - image: cimg/ruby:2.7-node  # 適切なDockerイメージを指定
+  steps:
+    - checkout  # GitHubリポジトリの内容をチェックアウト
 
-      # Bundlerのインストール
-      - run:
-          name: Install Bundler
-          command: gem install bundler
+    # SSHキーの追加
+    - add_ssh_keys:
+        fingerprints:
+          - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
 
-      # Serverspecのインストール
-      - run:
-          name: Install Serverspec
-          command: gem install serverspec
+    # Bundlerのインストール
+    - run:
+        name: Install Bundler
+        command: gem install bundler
 
-      # Serverspecのテストを実行
-      - run:
-          name: Run Serverspec Tests
-          command: |
-            cd /var/sample-app/raisetech-live8-sample-app  # Serverspec用Rakefileが存在する場所に移動
-            rake spec  
+    # Serverspec用の依存関係をインストール
+    - run:
+        name: Install Dependencies
+        command: |
+          cd serverspec  # GitHub内のServerspecディレクトリに移動
+          bundle install --path vendor/bundle
+
+    # Serverspecのテストを実行
+    - run:
+        name: Run Serverspec Tests
+        command: |
+          cd lecture/serverspec
+          bundle exec rake spec
+
 
 
 
