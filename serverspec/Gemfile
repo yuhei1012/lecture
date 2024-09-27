@@ -3,4 +3,4 @@ source 'https://rubygems.org'
 gem "serverspec"
 gem "rake"
 gem "ed25519"
-gem "bcrypt"
+gem "bcrypt_pbkdf"
