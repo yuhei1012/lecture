@@ -5,17 +5,16 @@ require 'net/ssh'
 set :backend, :ssh
 
 # EC2インスタンスの情報を設定
-options = Net::SSH::Config.for(host)
+host = ENV['EC2_PUBLIC_IP']  # 環境変数からEC2のパブリックIPを取得
+user = 'ec2-user'            # デフォルトユーザー
 
-# EC2のパブリックIPまたはDNS名を指定
-host = 'EC2_PUBLIC_IP'
-user = 'ec2-user' # デフォルトユーザー
-
-options[:user] = 'ec2-user'
-options[:keys] = ['~/.ssh/t123456.pem']  # SSH秘密鍵のパス
-options[:keys_only] = true
-options[:auth_methods] = ['publickey']
-options[:verify_host_key] = :never  # ホストキー検証を無効化
+options = {
+  user: user,
+  keys: ['~/.ssh/id_rsa'],   # CircleCIが自動で設定するSSHキーのパス
+  keys_only: true,
+  auth_methods: ['publickey'],
+  verify_host_key: :never    # ホストキーの検証を無効化
+}
 
 set :host, host
 set :ssh_options, options
