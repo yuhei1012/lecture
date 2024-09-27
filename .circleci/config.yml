@@ -113,7 +113,8 @@ jobs:
           name: Install Dependencies
           command: |
             cd serverspec  # GitHub内のServerspecディレクトリに移動
-            bundle install --path vendor/bundle
+            bundle config set --local path 'vendor/bundle'  # --pathの代わりにconfig setを使用
+            bundle install
 
       # Serverspecのテストを実行
       - run:
