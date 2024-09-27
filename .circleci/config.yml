@@ -98,8 +98,8 @@ jobs:
       - run:
           name: Run Serverspec Tests
           command: |
-            cd lecture/serverspec
-            rake spec
+            cd /var/sample-app/raisetech-live8-sample-app  # Serverspec用Rakefileが存在する場所に移動
+            rake spec  
 
 
 
