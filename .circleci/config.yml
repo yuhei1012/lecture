@@ -97,7 +97,9 @@ jobs:
       # Serverspecのテストを実行
       - run:
           name: Run Serverspec Tests
-          command: rake spec
+          command: |
+            cd lecture/serverspec
+            rake spec
 
 
 
