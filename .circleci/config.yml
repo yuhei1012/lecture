@@ -74,22 +74,27 @@ jobs:
             ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user  --private-key ~/.ssh/t123456.pem --ssh-common-args='-o StrictHostKeyChecking=no'
 
   execute-serverspec:
+    execute-serverspec:
     executor: ruby/default
     steps:
       - checkout
+      
+      # SSHキーを追加 (既に設定済みの場合はスキップ)
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
+
+      # Bundlerのインストール
       - run:
           name: Install Bundler
           command: gem install bundler
+
+      # Serverspecのインストール
       - run:
           name: Install Serverspec
           command: gem install serverspec
-      - run:
-          name: Initialize Serverspec (if needed)
-          command: |
-            serverspec-init
-            bundle init
-            echo "gem 'serverspec'" >> Gemfile
-            bundle install
+
+      # Serverspecのテストを実行
       - run:
           name: Run Serverspec Tests
           command: rake spec
