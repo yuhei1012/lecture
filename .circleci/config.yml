@@ -74,34 +74,41 @@ jobs:
             ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user  --private-key ~/.ssh/t123456.pem --ssh-common-args='-o StrictHostKeyChecking=no'
 
   execute-serverspec:
-    docker:
-      - image: cimg/ruby:2.7-node  # 適切なDockerイメージを指定
-    steps:
-      - checkout  # GitHubリポジトリの内容をチェックアウト
+  docker:
+    - image: cimg/ruby:2.7-node  # 適切なDockerイメージを指定
+  steps:
+    - checkout  # GitHubリポジトリの内容をチェックアウト
 
-      # SSHキーの追加
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
+    # SSHキーの追加
+    - add_ssh_keys:
+        fingerprints:
+          - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
 
-      # Bundlerのインストール
-      - run:
-          name: Install Bundler
-          command: gem install bundler
+    # SSHホストキーのチェックを無効化
+    - run:
+        name: Disable SSH Host Key Checking
+        command: |
+          echo "Host *" >> ~/.ssh/config
+          echo "  StrictHostKeyChecking no" >> ~/.ssh/config
 
-      # Serverspec用の依存関係をインストール
-      - run:
-          name: Install Dependencies
-          command: |
-            cd serverspec  # GitHub内のServerspecディレクトリに移動
-            bundle install --path vendor/bundle
+    # Bundlerのインストール
+    - run:
+        name: Install Bundler
+        command: gem install bundler
 
-      # Serverspecのテストを実行
-      - run:
-          name: Run Serverspec Tests
-          command: |
-            cd serverspec
-            bundle exec rake spec
+    # Serverspec用の依存関係をインストール
+    - run:
+        name: Install Dependencies
+        command: |
+          cd serverspec  # GitHub内のServerspecディレクトリに移動
+          bundle install --path vendor/bundle
+
+    # Serverspecのテストを実行
+    - run:
+        name: Run Serverspec Tests
+        command: |
+          cd serverspec
+          bundle exec rake spec
 
 workflows:
   version: 2
