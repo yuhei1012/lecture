@@ -13,7 +13,7 @@ options = {
   keys: ['~/.ssh/id_rsa'],   # CircleCIが自動で設定するSSHキーのパス
   keys_only: true,
   auth_methods: ['publickey'],
-  verify_host_key: :never    # ホストキーの検証を無効化
+  #verify_host_key: :never    # ホストキーの検証を無効化
 }
 
 set :host, host
