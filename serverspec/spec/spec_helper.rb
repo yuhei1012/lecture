@@ -6,17 +6,18 @@ set :backend, :ssh
 
 # EC2インスタンスの情報を設定
 host = ENV['EC2_PUBLIC_IP']  # 環境変数からEC2のパブリックIPを取得
-user = 'ec2-user'            # EC2のデフォルトユーザー
 
-options = {
-  user: user,
-  keys: [ENV['SSH_KEY_PATH']],   # 環境変数からSSHキーのパスを取得
-  keys_only: true,
-  auth_methods: ['publickey'],
-  verify_host_key: :never,       # ホストキーの検証を無効化
-  verbose: :debug                # デバッグ出力を有効化
-}
+# Net::SSH::Configを使用して、SSH設定を自動的に取得
+options = Net::SSH::Config.for(host)
+
+# 必要に応じて手動でオーバーライド
+options[:user] ||= 'ec2-user'   # デフォルトユーザー
+options[:keys] = [ENV['SSH_KEY_PATH']]   # 環境変数からSSHキーのパスを取得
+options[:keys_only] = true
+options[:auth_methods] = ['publickey']
+options[:verify_host_key] = :never
 
 set :host, host
 set :ssh_options, options
+
 
