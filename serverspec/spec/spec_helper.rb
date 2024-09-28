@@ -16,7 +16,7 @@ options[:keys] = [ENV['SSH_KEY_PATH']]   # 環境変数からSSHキーのパス�
 options[:keys_only] = true
 options[:auth_methods] = ['publickey']
 options[:verify_host_key] = :never
-verbose: :debug  # デバッグ出力を有効化
+verbose:　debug  # デバッグ出力を有効化
 
 set :host, host
 set :ssh_options, options
