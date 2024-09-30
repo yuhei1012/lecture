@@ -15,3 +15,13 @@
 ### CFn成功
 
 ![img](lecture13/lecture13/CircleCi_CFn_Succsess.png)
+
+
+### Ansible成功
+
+![img](lecture13/lecture13/CircleCi_Ansible_Success.png)
+
+
+### Serverspec成功
+
+![img](lecture13/lecture13/CircleCi_Serverspec_Succsess.png)
