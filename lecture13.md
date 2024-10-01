@@ -42,7 +42,7 @@
 
 
 # 構成図
-![img](lecture13/lecture13/lecture13_構成図.png)
+![img](lecture13/lecture13/構成図_lecture13.png)
 
 
 
