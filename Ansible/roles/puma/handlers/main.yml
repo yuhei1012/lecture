@@ -1,0 +1,13 @@
+---
+# handlers file for puma
+#
+#
+# handlers file for role puma
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Restart Puma
+  ansible.builtin.systemd:
+    name: puma
+    state: restarted

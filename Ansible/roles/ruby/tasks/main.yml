@@ -1,0 +1,120 @@
+---
+# tasks file for roles/ruby
+- name: Install Git
+  ansible.builtin.yum:
+    name: git
+    state: present
+    lock_timeout: 180
+
+
+- name: Install dependencies packages for ruby
+  become: yes
+  ansible.builtin.yum:
+    name: "{{ ruby_dependencies_pkg }}"
+    state: present
+  vars:
+    ruby_dependencies_pkg:
+      - gcc-c++
+      - glibc-headers
+      - openssl-devel
+      -  readline
+      - libyaml-devel
+      - readline-devel
+      - zlib
+      - zlib-devel
+      - libffi-devel
+
+- name: SetUp rbenv
+  ansible.builtin.git:
+    repo:  https://github.com/sstephenson/rbenv.git
+    dest: /usr/local/rbenv
+
+- name: Edit bashrc
+  ansible.builtin.template:
+    src: roles/ruby/templates/rbenv_system.sh.j2
+    dest: /etc/profile.d/rbenv.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Install ruby-build
+  ansible.builtin.git:
+    repo: https://github.com/sstephenson/ruby-build.git
+    dest: /usr/local/rbenv/plugins/ruby-build
+
+- name: Install Specific ruby version
+  shell: bash -lc "rbenv install --skip-existing 3.2.3"
+
+- name: Set global ruby version
+  shell: bash -lc "rbenv global 3.2.3"
+
+
+
+# yarn,node,gitclone追加
+
+
+- name: Add NodeSource repository
+  shell: curl -sL https://rpm.nodesource.com/setup_16.x | bash -
+
+- name: Install Node.js
+  ansible.builtin.yum:
+    name: nodejs
+    state: present
+
+- name: check if yarn is installed
+  ansible.builtin.shell: bash -lc "yarn -v"
+  register: check_yarn
+  changed_when: no
+  ignore_errors: yes
+  become: no
+
+- name: install yarn
+  shell: npm install --global yarn@{{ yarn_version }}
+  become: no
+  when: check_yarn is failed
+
+- name: yarn add yarn
+  shell: yarn add yarn
+  args:
+    chdir: /home/{{ ansible_user }}/raisetech-live8-sample-app
+  become: no
+  when: check_yarn is failed
+
+- name: Check if there are local modifications in the repository
+  command: git status --porcelain
+  args:
+    chdir: /var/sample-app/raisetech-live8-sample-app
+  register: git_status
+  ignore_errors: true
+
+- name: Clone Rails Application Repository
+  ansible.builtin.git:
+    repo: 'https://github.com/yuta-ushijima/raisetech-live8-sample-app.git'
+    dest: /var/sample-app/raisetech-live8-sample-app
+    version: master
+    force: no
+    update: yes
+  when: git_status.stdout == ''
+  ignore_errors: true
+
+
+
+
+- name: Check if Ruby is installed
+  ansible.builtin.stat:
+    path: /usr/local/rbenv/versions/{{ ruby_version }}
+  register: ruby_check_install
+
+- name: Install Ruby
+  shell: bash -lc "rbenv install {{ ruby_version }}"
+  when: ruby_check_install.stat.exists == false
+
+- name: Set default Ruby version
+  shell: bash -lc "rbenv global {{ ruby_version }} && rbenv rehash"
+
+- name: Install bundler and so on
+  shell: bash -lc "gem install {{ item }}"
+  with_items:
+    - rbenv-rehash
+    - bundler -v '{{ bundler_version }}'
+    - rails -v '{{ rails_version }}'

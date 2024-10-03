@@ -1,0 +1,86 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: ec2_template
+
+Parameters:
+  InstanceType:
+    Type: String
+    Default: t3.micro
+    AllowedValues:
+      - t3a.large
+      - t2.micro
+      - t3.micro
+      - m1.small
+      - m1.large
+
+Resources:
+  lecture13a:
+    Type: AWS::EC2::Instance
+    Properties:
+      NetworkInterfaces:
+        - SubnetId: !ImportValue PublicSubnet1a
+          GroupSet:
+            - !Ref SecurityGroupEC2
+          DeviceIndex: 0
+      InstanceType: !Ref InstanceType
+      ImageId: ami-04187878432a16ba9
+      Tags:
+        - Key: Name
+          Value: lecture13a
+      KeyName: t123456
+      IamInstanceProfile: lecture13
+
+  lecture13b:
+    Type: AWS::EC2::Instance
+    Properties:
+      NetworkInterfaces:
+        - SubnetId: !ImportValue PublicSubnet1c
+          GroupSet:
+            - !Ref SecurityGroupEC2
+          DeviceIndex: 0
+      InstanceType: !Ref InstanceType
+      ImageId: ami-04187878432a16ba9
+      Tags:
+        - Key: Name
+          Value: lecture13b
+      KeyName: t123456
+
+  SecurityGroupEC2:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SecurityGroupEC2
+      GroupName: SecurityGroupEC2
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: SecurityGroupEC2
+      VpcId: !ImportValue SampleVPC
+
+Outputs:
+  SecurityGroupEC2:
+    Value: !Ref SecurityGroupEC2
+    Export:
+      Name: SecurityGroupEC2
+  lecture13a:
+    Value: !Ref lecture13a
+    Export:
+      Name: lecture13a
+  lecture13:
+    Value: !Ref lecture13b
+    Export:
+      Name: lecture13b

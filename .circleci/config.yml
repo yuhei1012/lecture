@@ -1,6 +1,9 @@
 version: 2.1
 orbs:
   python: circleci/python@2.0.3
+  aws-cli: circleci/aws-cli@3.1.5
+  ansible-playbook: orbss/ansible-playbook@0.0.5
+
 jobs:
   cfn-lint:
     executor: python/default
@@ -10,9 +13,130 @@ jobs:
       - run:
           name: run cfn-lint
           command: |
-            cfn-lint -i W3002 -t lecture12/*.yml
+            cfn-lint -i W3002 -t lecture13/*.yml
+
+  cfn-execute:
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-region: AWS_DEFAULT_REGION
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+      - run:
+          name: Deploy Network Stack
+          command: |
+            aws cloudformation deploy \
+              --template-file lecture13/lecture13_cfn_network.yml \
+              --stack-name MyNetworkStack
+      - run:
+          name: Deploy EC2 Stack
+          command: |
+            aws cloudformation deploy \
+              --template-file lecture13/lecture13_cfn_ec2.yml \
+              --stack-name MyEC2Stack \
+              --capabilities CAPABILITY_NAMED_IAM
+      - run:
+          name: Deploy ALB Stack
+          command: |
+            aws cloudformation deploy \
+              --template-file lecture13/lecture13_ALB.yml \
+              --stack-name MyALBStack
+      - run:
+          name: Deploy RDS Stack
+          command: |
+            aws cloudformation deploy \
+              --template-file lecture13/lecture13_cfn_RDS.yml \
+              --stack-name MyRDSStack
+      - run:
+          name: Deploy S3 Stack
+          command: |
+            aws cloudformation deploy \
+              --template-file lecture13/yaml_S3.yml \
+              --stack-name MyS3Stack
+
+  execute-ansible:
+    executor: python/default
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
+      - run:
+          name: Install Ansible
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y ansible
+      - run:
+          name: Run Ansible Playbook
+          command: |
+            ansible-playbook -i Ansible/inventory Ansible/playbook.yml -u ec2-user --private-key $SSH_KEY_PATH --ssh-common-args='-o StrictHostKeyChecking=no'
+
+  execute-serverspec:
+    docker:
+      - image: cimg/ruby:2.7-node  # 適切なDockerイメージを指定
+    steps:
+      - checkout  # GitHubリポジトリの内容をチェックアウト
+      
+      # ワークスペースを利用して、他のジョブから環境変数などを引き継ぎたい場合はここでattach
+      # - attach_workspace:
+      #    at: .
+
+      # SSHキーを追加
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:gQOPoizFS1RyIloUBqB19GphWuByvslPGm6xS2ZJgC0"
+
+      # SSHホストキーのチェックを無効化
+      - run:
+          name: Disable SSH Host Key Checking
+          command: |
+            echo "Host *" >> ~/.ssh/config
+            echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+      
+      # ~/.ssh/configにEC2接続用の設定を追加
+      - run:
+          name: Setup SSH config for EC2
+          command: |
+            echo "Host target" >> ~/.ssh/config
+            echo "  HostName ${EC2_PUBLIC_IP}" >> ~/.ssh/config  # ここでEC2のPublic IPを環境変数として指定
+            echo "  User ec2-user" >> ~/.ssh/config
+            echo "  IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config  # CircleCIに登録したSSHキーを使用
+
+      # Bundlerのインストール
+      - run:
+          name: Install Bundler
+          command: gem install bundler
+
+      # Serverspec用の依存関係をインストール
+      - run:
+          name: Install Dependencies
+          command: |
+            cd serverspec  # GitHub内のServerspecディレクトリに移動
+            bundle config set --local path 'vendor/bundle'  # --pathの代わりにconfig setを使用
+            bundle install
+
+      # Serverspecのテストを実行
+      - run:
+          name: Run Serverspec Tests
+          command: |
+            cd serverspec
+            bundle exec rake spec
 
 workflows:
-  raisetech:
+  version: 2
+  build_and_deploy:
     jobs:
       - cfn-lint
+      - cfn-execute:
+          requires:
+            - cfn-lint
+      - execute-ansible:
+          requires:
+            - cfn-execute
+      - execute-serverspec:
+          requires:
+            - execute-ansible
+
+
+

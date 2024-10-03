@@ -1,0 +1,35 @@
+#Restart=always
+#Environment="REDIS_ec2-52-196-170-136.ap-northeast-1.compute.amazonaws.com"
+#Environment=RAILS_ENV=development
+#Environment=RAILS_SERVE_STATIC_FILES=1
+#Environment="LANG=ja_JP.UTF-8"
+#Environment="RAILS_MAX_THREADS=20"
+#RestartSec=10
+#killMode=process
+#TimeoutSec=60
+#PIDFile=/var/sample-app/raisetech-live8-sample-app/tmp/pids/puma.pid
+#ExecReload=/bin/kill -USR2 $MAINPID
+[Unit]
+Description=Puma HTTP Server
+After=network.target
+
+[Service]
+Type=notify
+User=ec2-user
+WorkingDirectory=/var/sample-app/raisetech-live8-sample-app
+ExecStart=/bin/bash -lc 'puma -C /var/sample-app/raisetech-live8-sample-app/config/puma.rb'
+ExecStop=/bin/kill -SIGTERM $MAINPID
+Restart=always
+RestartSec=10
+KillMode=process
+TimeoutSec=60
+Environment=RAILS_ENV=development
+Environment=RAILS_SERVE_STATIC_FILES=1
+Environment="LANG=ja_JP.UTF-8"
+Environment="RAILS_MAX_THREADS=20"
+Environment=PUMA_DEBUG=1
+PIDFile=/var/sample-app/raisetech-live8-sample-app/tmp/pids/puma.pid
+ExecReload=/bin/kill -USR2 $MAINPID
+
+[Install]
+WantedBy=multi-user.target

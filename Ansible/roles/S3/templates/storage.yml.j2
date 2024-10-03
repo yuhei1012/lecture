@@ -1,0 +1,8 @@
+amazon:
+  service: S3
+  region: 'ap-northeast-1'
+  bucket: 'lecture13'
+
+local:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>
