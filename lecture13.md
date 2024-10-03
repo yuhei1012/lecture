@@ -60,7 +60,7 @@ precompileを実行するコマンドがないとapplication.rbに記述され�
 
 
 # 構成図
-![img](lecture13/lecture13/構成図_lecture13.png)
+![img](lecture13/lecture13/構成図_lecture13_修正_S3.png)
 
 
 
